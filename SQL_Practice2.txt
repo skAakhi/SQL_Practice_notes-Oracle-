@@ -1,0 +1,1480 @@
+TYPES OF FUNCTIONS;
+
+1.CHARACTER--->[Lower,Upper,initcap,Concat,Length,Trim,Ltrim,Rtrim,LPAD,RPAD,SubString,InString,ASCII,Replace]
+
+2.NUMBER------>[Modulus,Round,Ceil,Floor,Truncate,Power,Square,Absolute,Round]
+
+3.DATE-------->[Sysdate,Last day,Next_Day,Trunc_date,Add_Months,Months_between]
+
+4.CONVERSION-->[To_CHAR,To_Date,To_NUMBER]
+
+5.AGGREGATE--->[Sum,Maximum,Minimum,Count,Average,Standard Deviation,Variance]
+
+
+---------------------------------------------------------------------------------------------------------------------------
+1.1
+Lower Function:
+
+Syntax:
+
+Select Lower(String/Column)
+from <TableName>
+
+
+Example:
+
+SELECT LOWER(NAME) 
+FROM emp;
+
+raju
+sita
+gopi
+sravya
+
+
+
+1.2
+UPPER Function:
+
+Syntax: 
+Select UPPER(String/Column)
+from <TableName>
+
+Example:
+
+SELECT UPPER(NAME) 
+FROM emp;
+
+RAJU
+SITA
+GOPI
+SRAVYA
+
+
+
+
+1.3
+
+initcap Function: [Always while retriving First letter starts with captical letter]
+
+
+Example:
+
+SELECT INITCAP(NAME)
+FROM emp;
+
+
+Raju
+Sita
+Gopi
+Sravya
+
+
+
+
+
+1.4
+
+Concat Function:
+
+Synatx:
+
+Concat(can pass only two parameters)
+
+
+Example:
+
+SELECT CONCAT(NAME,SAL)
+FROM emp;
+
+
+Raju20000
+sita30000
+gopi6400
+sravya5400
+
+
+
+
+
+
+1.5
+
+Length Function:
+
+Example:
+
+SELECT LENGTH(NAME),NAME
+FROM emp;
+
+
+4	Raju
+4	sita
+4	gopi
+6	sravya
+
+
+
+
+
+
+1.6
+
+RPAD Function:
+
+
+Syntax:
+RPAD(String/column,PaddingLength,[Pad_String]);
+
+
+Example:
+RPAD(Name,9,'*');----ex:Name=steven and its length is 6
+
+output:
+steven***
+
+
+ 
+SELECT NAME,Length(NAME),RPAD(NAME,9,'*')------->Not only star you can replace anything you want
+FROM emp;
+
+
+output:
+Raju	4	Raju*****
+sita	4	sita*****
+gopi	4	gopi*****
+sravya	6	sravya***
+
+
+
+
+
+
+
+1.7
+
+LAPAD Function:
+
+
+Example:
+SELECT NAME,Length(NAME),LPAD(NAME,9,'*')
+FROM emp;
+
+
+
+Raju	4	*****Raju
+sita	4	*****sita
+gopi	4	*****gopi
+sravya	6	***sravya
+
+
+
+
+ASSIGNMENT:
+
+1. Use the LPAD function and add the five *  at the Left hand side of first_name  of each employee 
+   from employees table  
+2. Use the LPAD function and add the five $  at the Left hand side of Last_name  of each employee 
+   from employees table
+3. Use the LPAD function and add the five *  at the Left hand side of first_name  of each employee 
+   from employees table where salary is greater than 9000
+
+
+
+
+
+
+
+
+1.8
+
+LTRIM Function:
+
+
+Syntax:
+
+LTRIM(String/column,'String');
+
+
+Example:
+
+SELECT NAME,LTRIM(NAME,'*')----->[whatever we provide inplace of * it will remove all from left hand side]
+from emp
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+****sravya	sravya
+
+
+
+
+
+
+
+1.9
+
+RTRIM Function:
+
+
+Syntax:
+
+RTRIM(String/column,'String');
+
+
+Example:
+
+SELECT name,RTRIM(name,'#')
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+
+sravya###	sravya
+
+
+
+10.1
+
+
+TRIM Function:
+
+
+Syntax:
+
+TRIM(Leading | Trailing | Both,from,String/Column);
+
+
+Example:
+
+SELECT name,TRIM(BOTH '#' FROM name)
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+###sravya###	sravya
+
+
+
+SELECT name,TRIM(Leading '#' FROM name)
+FROM emp;
+
+Raju	Raju
+sita	sita
+gopi	gopi
+###sravya###	sravya###
+
+
+
+SELECT name,TRIM(Trailing '#' FROM name)
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+###sravya###	###sravya
+
+
+
+SELECT name,TRIM('#' from name)
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+###sravya###	sravya
+
+
+
+SELECT name,TRIM(name)------------>It will remove spaces from both sides
+FROM emp; 
+
+
+
+
+
+
+
+
+
+
+11.1
+
+
+NVL Function:[In place of NULL value to provide meaningfull message at output side]
+
+
+Syntax:
+
+NVL(String/Column,Replace_with);  or COALESCE(name, Replace_with); 
+
+
+
+Example:
+
+NOTE:
+It indicates that the NVL function is not working correctly in your query. 
+This could happen if the NULL value in the name column is not a true SQL NULL but instead an empty string ('') or
+a value treated differently by the database.
+
+
+
+SELECT  name,COALESCE(name,'Not applicable') as DisplayName
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+null	null------->It suppose to give Not applicable as at output side but in oracle datase instead of NULL it treated as empty string ' '
+
+
+
+
+
+
+12.1
+
+Syntax:
+
+NVL2(Column/String,Expression1,Expression2)--------> If NOT Null Exp1 will return , otherwise Exp2 will return
+
+
+
+Example:
+SELECT  name,NVL2(name,'Not applicable',name) as DisplayName
+FROM emp;
+
+
+Raju	Not applicable    ----------------->In oracle dataBase it is treated  empty string insted of NULL so i have placed 'Not applicaple' if condition is NOT equal to NULL
+sita	Not applicable
+gopi	Not applicable
+null	Not applicable
+
+
+
+
+
+
+
+ASSIGNMENT:
+
+0) Select commission column from employee table and wherever null value is there display   "NULL value found"  else display the salary 
+1) Select commission  from employee table of employees whose first_name start with "D" and wherever null value is there display   "NULL Value available" else display the commission 
+2) Select commission  of those  employee who hired between 2003 and 2004 from employee table and  where  and wherever null value is there display   "NULL value found" else display the first_name 
+3) out is output of following query 
+   select NVL(To_char(MNG) ,employee_id, 'Head of Company') from employee 
+4) increase employee id with 5 number 
+5) Display the employee who joined after 2003
+6 Display all the employee names and teir salary whose salary is not in the range on 1500 and 2850
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+13.1
+
+
+INSTR Function:
+
+
+
+Syntax:
+INSTR(String/Column,SubString,Start_position,No_Of_Occurance); ------>[If third parameter is positive then cursor will count left->Right, OtherWise if Negative cursor will move from Right->Left]
+
+
+
+Example:
+
+--            123456789
+SELECT INSTR('abcdcecrc','c',2,3)
+from DUAL;
+
+output:
+7
+
+
+
+--            123456789
+SELECT INSTR('abcdcecrc','c',2,2)
+from DUAL;
+
+output:
+5
+
+
+
+SELECT INSTR('abcdcecrc','c',-2,3)
+from DUAL;
+
+
+output:
+3
+
+
+
+SELECT INSTR(name,'a',2,2)--------->Name=Sravya[Last occurance of a is 6]
+from emp
+where empid=8;
+
+
+Output:
+
+6
+
+
+
+
+ASSIGNMENT:
+
+1) Find the first occurrence position of "a" from "Rakesh Malviya" string and start searching with 4th position
+2) Find the first   occurrence position of "tev"  in  first_name column and start  searching with 1st  position  , from employee table 
+3) Tell the output of following query
+   select INST('Corporate floor' , 'or' ,1 , 1)
+   from dual 
+4) Tell the output of following query
+  Select INSTR('Corporate Floor','or', 3, 2) 
+  from dual
+5) Tell the output of following query
+  Select INSTR('Corporate Floor','or', -3, 2) 
+  from dual 
+6) Tell the output of following query
+   SELECT INSTR('THIS IS THE THING','TH',1,1) "Position Found"
+   FROM DUAL;
+
+
+
+
+
+
+ANS:
+
+1.
+select INSTR('Rakesh Malviya' , 'a' ,4 , 1)
+from dual ;
+
+output:
+9
+
+
+2.------->?
+
+3.-->1
+
+4.-->14
+
+5.--->1
+
+6.--->1
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+SUBSTR Function:[ Sub_part of String]
+
+
+Syntax:
+
+SUBSTR(String/Column,StartingPosition,NumberOfCharacters);
+
+
+Example:
+
+SELECT SUBSTR('Aakhib', 2,4)
+FROM DUAL;
+
+
+output:
+
+akhi
+
+
+
+SELECT SUBSTR('Aakhib', -2,4)
+FROM DUAL;
+
+
+output:
+
+ib
+
+
+
+SELECT SUBSTR(name, 2,4)"SubNames",name
+FROM emp;
+
+
+aju	Raju
+ita	sita
+opi	gopi
+ravy	Sravya
+
+
+
+
+ASSIGNMENT:
+
+1) Display  the "Con" from "eqaulConnect" string  and display the same
+2) Display  the "nec" from "eqaulConnect" string  and display the same 
+   note : search from reverse direction
+3) Tell the output of following query
+select SUBSTR("Rakesh Malviya" , 2 ,3) from dual  
+4) Tell the output of following query
+select SUBSTR(first_name, -2 ,3) from employee where employee_id = 10
+5)Tell the output of following query
+select SUBSTR("Rakesh Malviya", 2 ,3) from employee 
+
+
+
+
+
+ANS:
+
+1.
+SELECT SUBSTR('eqaulConnect', 6,3)"SubNames"
+FROM DUAL;
+
+
+2.
+SELECT SUBSTR('eqaulConnect', -4,3)"SubNames"
+FROM DUAL;
+
+
+
+3.ake
+
+4.---Random Table?
+
+5.------> will repeat n Number of records times
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+TO_CHAR Function:
+
+
+Syntax:
+
+TO_CHAR(NumericValue/DateValue/ColumnValue)
+
+
+Example:
+
+SELECT TO_CHAR(HireDate),HireDate
+FROM emp;
+	
+	
+01-01-03	01-01-03
+
+
+
+
+SELECT TO_CHAR(Name),Name
+FROM emp;
+
+
+Raju	Raju
+sita	sita
+gopi	gopi
+Sravya	Sravya
+	
+
+
+ASSIGNMENT:
+1) display the salary column in character format from employee table where employee_id is greater then 100
+2) display the date column in character format from employee table where salary  in between 10000 and 18000
+3) Display the first three digit of salary from employee table , hint : use substr , to_char function
+4) find the first occurrence of first zero and start searching from first position  from employee table , hint : use INSTR , to_char function
+5) Replace Jan month with DEC in hire_date column  from employee table , hint : use to_char , replace function
+6) tell me the output of below query
+   select replace(to_char(hire_date , 'DD-MM-YYYY') , '2004' , 'year') from employee 
+
+
+
+
+
+
+ANS:
+1.SKIP
+
+2.SELECT TO_CHAR(hireDate),Name
+FROM emp
+WHERE SAL BETWEEN 10000 AND 18000;
+
+
+
+3.SELECT TO_CHAR(SUBSTR(SAL,1,3))"ThreeDigitSalary",sal
+FROM emp;
+
+output:
+
+200	20000
+300	30000
+640	6400
+540	5400
+
+
+
+4.
+SELECT TO_CHAR(INSTR(SAL,'0',1,1))"FirstOccurance",sal
+FROM emp;
+
+
+
+2	20000
+2	30000
+3	6400
+3	5400
+
+
+
+
+5.
+SELECT REPLACE(TO_CHAR(HireDate,'DD-MON-YY'),'DEC','JAN') "NewUpdatedYear",HireDate
+FROM emp;
+
+01-JAN-03	01-12-03
+01-JAN-03	01-12-03
+01-JAN-03	01-12-03
+01-JAN-03	01-12-03
+01-JAN-03	01-12-03
+
+
+NOTE:
+
+Replace Function:
+
+Syntax:
+REPLACE(original_string, search_string, replacement_string)
+
+Example:
+
+SELECT REPLACE('hello world', 'world', 'SQL') AS Result
+FROM DUAL;
+
+hello SQL
+
+
+
+SELECT REPLACE('hello world', 'world') AS Result
+FROM DUAL;
+
+
+hello
+
+
+
+SELECT REPLACE('banana', 'a', 'o') AS Result
+FROM DUAL;
+
+
+
+bonono
+
+
+
+SELECT REPLACE('SQL is Fun', 'sql', 'awesome') AS Result----------------------->Case sensitive
+FROM DUAL;
+
+
+SQL is Fun
+
+
+
+
+
+
+
+
+6. All records will be replaced with  'year'  in place 2004 if found.
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+TO_NUMBER Function: [Convert varchar value into number formate]
+
+
+
+Syntax:
+
+TO_CHAR(String/Column);
+
+
+
+Example:
+
+SELECT To_NUMBER(empid) "COnvertedTochar" ,empid 
+from emp;
+
+COnvertedTochar   empid
+5	           5
+6	           6
+7	           7
+8	           8
+
+
+
+
+
+ASSIGNMENT:
+
+1) Update first_name as 123 in employee table , now select first_name and multiply with 2 from employee  
+    where first_name is '123'  
+2) Cut the starting two number from salary column and multiply with 2 and display the same, from employee 
+   table , hint : use to_number , to_char , SUBSTR function
+
+
+
+
+ANS:
+
+1.SELECT To_NUMBER(empid*2) "COnvertedTochar" ,empid from emp;------->[similar example]
+
+
+2.
+SELECT TO_NUMBER(TO_CHAR(SUBSTR(SAL,1,2))),SAL
+FROM EMP;
+
+(OR)
+
+SELECT TO_CHAR(SUBSTR(SAL,1,2)),SAL
+FROM EMP;
+
+
+(OR)
+
+SELECT SUBSTR(SAL,1,2),SAL
+FROM EMP;
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+FLOOR Function:[It will give lower value]
+
+
+
+Syntax:
+
+FLOOR(NumericValue/column);
+
+
+Example:
+
+SELECT FLOOR(8.9)
+FROM DUAL;
+
+
+OUTPUT:
+8
+
+
+
+
+ASSIGNMENT:
+
+1) give the floor value of 18.6  use dual table for place holder
+2) Increase the salary by 5.5% and give the floor value of the from employee table  the floor value of all top 5 commission  from employee table
+3) Give the floor value of commission of those employee in which there name having 'S' from employee table
+4) Decrement salary by 1.2% and give the floor of the same , of those employee who hired before 2003 from employee table
+
+
+
+
+ANS:
+
+1.
+SELECT FLOOR(18.6)
+FOM DUAL;
+
+18
+
+
+2.
+UPDATE employee
+SET salary = FLOOR(salary * 1.055);
+
+
+SELECT FLOOR(commission)
+FROM employee
+ORDER BY commission DESC
+FETCH FIRST 5 ROWS ONLY;
+
+
+emp_id	name	salary	commission
+1	Alice	50000	2000
+2	Bob	55000	3000
+3	Charlie	60000	4000
+4	David	45000	3500
+5	Eve	70000	5000
+6	Frank	52000	4500
+
+
+Floor(commission)
+5000
+4500
+4000
+3500
+3000
+
+
+
+
+3.
+SELECT name, FLOOR(commission) AS floor_commission
+FROM employee
+WHERE name LIKE '%S%';
+
+
+
+
+4.
+UPDATE employee
+SET salary = FLOOR(salary * 0.988)
+WHERE hire_date < DATE '01-01-2003';
+
+
+Explanation:
+
+salary * 0.988: Reduces the salary by 1.2% (100% - 1.2% = 98.8% = 0.988).
+FLOOR(): Rounds the resulting salary down to the nearest integer.
+hire_date < DATE '2003-01-01': Filters employees hired before January 1, 2003.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Ceil Function:[It considers upper value]
+
+
+
+Syntax:
+
+Ceil(NumericValue/Column);
+
+
+
+Example:
+
+SELECT CEIL(9.2)
+FROM DUAL;
+
+output:
+10
+
+
+SELECT CEIL(9.-1)----->This is undefined behaviour it suppose to give 9 but 9.-1[9-1] is subtracting 8
+FROM DUAL;
+
+output:
+8
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+POWER Function:
+
+
+Syntax:
+
+POWER(M,N);[M->Base value,N->Power value]
+
+
+
+Example:
+
+
+SELECT POWER(2,2)
+FROM DUAL;
+
+OUTPUT:
+4
+
+
+SELECT POWER(empid,2),empid
+FROM emp;
+
+
+25	5
+36	6
+49	7
+64	8
+
+
+
+
+ASSIGNMENT:
+
+1) Display the power  of 10 of 2 and use dual table as place holder
+2) Give the power  3 of those employee from employee table who hired before 2004 and salary more then 2000
+3) Give the power 2 of department in which department start with 3 
+4) Increment the salary by $5 and Give the power 4 of the same from employee table where salary between 9000 and 20000
+5) Give the power 3 of commission of all the from employee table whose experience is more than 10 year
+6) give the power 3 of salary of those employee who is working as IT professional or account or marketing from employee table
+7) Give the power 3 of those employee whose name start with 'P' and end with 'a' from employee table
+
+
+
+
+
+ANS:
+
+1.
+SELECT POWER(10, 2) AS power_result
+FROM DUAL;
+
+
+
+2.
+SELECT NAME, SAL, POWER(SAL, 3) AS "power3Sal"
+FROM emp
+WHERE HireDate < DATE '2004-01-01' AND SAL > 2000;
+
+
+Note:
+DATE '2004-01-01': Ensures the date is interpreted correctly as a date type in SQL.
+
+
+
+
+3.
+SELECT deptno, POWER(deptno, 2) AS power2Dept
+FROM department
+WHERE deptno LIKE '3%';
+
+deptno	power2Dept
+30	900
+31	961
+300	90000
+
+
+
+
+4.
+SELECT NAME,sal,SAL+5 "SalUpdated",
+power(sal+5,4)"Power_4"
+from emp
+where sal between 9000 and 20000;
+
+
+
+(or)
+
+
+
+4.1
+SELECT name, 
+       salary + 5 AS updated_salary, 
+       POWER(salary + 5, 4) AS salary_power_4
+FROM employee
+WHERE salary BETWEEN 9000 AND 20000;
+
+
+
+name	updated_salary	salary_power_4
+Alice	9505	        8156363050625
+Bob	12005	        207364963005601
+David	15005	        50626356650750625
+
+
+
+
+
+
+5.
+SELECT name, 
+       commission, 
+       POWER(commission, 3) AS commission_power_3
+FROM employee
+WHERE SYSDATE - hire_date > 3650; -- 10 years in days
+
+
+
+
+(or)
+
+
+
+5.1
+SELECT name, 
+       commission, 
+       POWER(commission, 3) AS commission_power_3
+FROM employee
+WHERE ADD_MONTHS(hire_date, 120) < SYSDATE; -- 120 months = 10 years
+
+
+
+
+name	commission	commission_power_3
+Alice	2000	         8000000000
+Charlie	2500	         15625000000
+David	4000	         64000000000
+
+
+
+
+
+
+6.
+SELECT name, 
+       job_role, 
+       salary, 
+       POWER(salary, 3) AS salary_power_3
+FROM employee
+WHERE job_role IN ('IT Professional', 'Accountant', 'Marketing');
+
+
+
+
+name	job_role	salary	salary_power_3
+Alice	IT Professional	5000	125000000000
+Bob	Accountant	7000	343000000000
+David	Marketing	6000	216000000000
+
+
+
+
+
+
+
+7.
+SELECT name, 
+       salary, 
+       POWER(salary, 3) AS salary_power_3
+FROM employee
+WHERE name LIKE 'P%a';
+
+
+
+name	salary	salary_power_3
+Priya	5000	125000000000
+Prema	6000	216000000000
+Pooja	8000	512000000000
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ROUND Function:
+
+
+Syntax:
+
+ROUND(Numeric/Column,roundingValue);
+
+
+
+Example:
+
+SELECT ROUND(9.1243,2)
+FROM DUAL;
+
+
+OUTPUT:
+
+9.12
+
+
+
+NO ASSIGNMENT:
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+MOD Function:
+
+
+Syntax:
+
+MOD(M,N);---->[M,N values for calculation]
+
+
+
+Example:
+
+select mod(5,3)
+from dual;
+
+output:
+2
+
+select mod(15,3)
+from dual;
+
+output:
+0
+
+select mod(9,2)
+from dual;
+
+
+output:
+1
+
+
+
+
+ASSIGNMENT:
+
+1)	Display the modulus of 100 of 10 use dual table as place holder
+2)	Give the modulus of salary of 10 from employee table
+3)	Give the modulus of salary of 5 and append **** in font from modulus  from employee table
+Example :  ****5
+4)	Give the modulus of department of  2 and append leading and trailing XXX from employee table
+Example: XXX8XXX
+5)	 Give the modulus of department of  2 and append  trailing $$$ from employee table
+Example: 8$$$
+6)	Calculate square of salary and display the modulus of 10 of the same from employee table
+
+
+
+
+
+ANS:
+
+1.
+SELECT MOD(100, 10) AS modulus_result
+FROM DUAL;
+
+
+
+2.
+SELECT MOD(SAL,10),SAL
+FROM EMP;
+
+
+3.
+SELECT CONCAT('****',MOD(SAL,5)) "UpdtSal",sal
+from emp;
+
+****0	20000
+****0	30000
+****0	6400
+****0	5400
+
+
+
+4.
+SELECT CONCAT('XXX', MOD(department, 2), 'XXX') AS department_modulus
+FROM employee;
+
+
+DEPARTMENT_MODULUS
+-------------------
+XXX0XXX
+XXX1XXX
+XXX0XXX
+
+
+
+5.
+SELECT CONCAT(MOD(department, 2), '$$$') AS department_modulus
+FROM employee;
+
+
+DEPARTMENT_MODULUS
+-------------------
+0$$$
+1$$$
+0$$$
+
+
+
+
+6.
+SELECT MOD(POWER(salary, 2), 10) AS salary_square_modulus
+FROM employee;
+
+
+If the salary column contains values like 10, 15, and 25, the output might look like:
+
+SALARY_SQUARE_MODULUS
+----------------------
+0
+5
+5
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+MIN,MAX,AVG Functions:
+
+
+syntax:
+MIN(Value/column);
+MAX(Value/column);
+AVG(Value/column);
+
+
+Example:
+
+SELECT MAX(SAL),MIN(SAL),AVG(SAL)-------------------->Here we cannot declare multiple columns because it is single row functions.
+FROM EMP;
+
+
+output:
+MAX      MIN      AVG
+30000	5400	15450
+
+
+
+
+
+ASSIGNMNETS:(MIN)
+
+1)	Get the minimum salary from employee table 
+2)	Get the minimum department from department table
+3)	Get the minimum commission from employee table where employee id in between 100 and 150 or commission is null 
+4)	Get the minimum salary from employee table where last name start with ‘S’ and  do the square of same 
+5)	Give the employee whose name shortest among all the employee in employee table , use min and length function
+
+
+
+ANS:
+
+4.
+SELECT POWER(MIN(salary), 2) AS min_salary_square
+FROM employee
+WHERE last_name LIKE 'S%';
+
+
+
+
+5.
+SELECT MIN(LENGTH(NAME))---------------------------------->This query will print just a result
+FROM EMP;
+
+
+
+5.1-------------------------------------------------------->Along with result if you want to print all records ,then the query should write in such a way 
+SELECT *
+FROM emp
+WHERE LENGTH(name) = (
+    SELECT MIN(LENGTH(name))
+    FROM emp
+);
+
+
+
+(or)
+
+5.1
+SELECT *
+FROM employee
+WHERE LENGTH(first_name || ' ' || last_name) = (
+    SELECT MIN(LENGTH(first_name || ' ' || last_name))
+    FROM employee
+);
+
+
+
+
+-----------------
+
+
+ASSIGNMENT(AVG):
+
+1)	Give the average salary  from employee table 
+2)	Give the average commission and if average salary is NULL then print “AVERAGE SALARY  IS NULL” else Print “ AVERAGE SALRY IS NOT NULL” from employee table
+3)	Display the average salary with trailing $$$ from table where department id is in 10,20,30,40
+4)	Display the average salary of those employee who joined before 15th of month
+5)	Display the average of commission and wherever commission is null use 100 instead of null from employee table 
+
+
+
+
+ANS:
+----
+2.
+SELECT 
+    AVG(commission_pct) AS average_commission,
+    CASE 
+        WHEN AVG(salary) IS NULL THEN 'AVERAGE SALARY IS NULL'
+        ELSE 'AVERAGE SALARY IS NOT NULL'
+    END AS salary_status
+FROM employees;
+
+
+
+
+3.
+select concat(avg(sal),'$$$') as sal_with_trail
+from emp
+where empid in(10,20,30,40);
+
+
+
+4.
+
+SELECT 
+    AVG(salary) AS average_salary
+FROM employees
+WHERE TO_CHAR(hire_date, 'DD') < '15';
+
+
+
+(or)
+
+4.1
+SELECT 
+    AVG(salary) AS average_salary
+FROM employees
+WHERE DAY(hire_date) < 15;
+
+
+
+5.
+SELECT 
+    AVG(COALESCE(commission_pct, 100)) AS average_commission
+FROM employees;
+
+
+
+
+ASSIGNMENT(MAX):
+
+											  
+1)	Give the max department id and employee id from employee table 
+2)	Give the max salary and increment the same by 5%and display the same from employee table
+3)	Give the max salary from employee table where department id is in 10,20,30 ,40
+4)	Write a query to display pyramid 
+5)	Give the max department id of those employee who hired in last week of month
+
+
+
+
+
+ANS:
+
+2.
+SELECT 
+    MAX(salary) AS max_salary,
+    MAX(salary) * 1.05 AS increased_salary
+FROM employees;
+
+
+
+
+
+4.
+WITH pyramid AS (
+  SELECT LEVEL AS row_num
+  FROM dual
+  CONNECT BY LEVEL <= 5  -- Change the number to increase or decrease the pyramid height
+)
+SELECT RPAD(' ', 5 - row_num, ' ') || LPAD('*', 2 * row_num - 1, '*') AS pyramid_row
+FROM pyramid;
+
+
+
+
+
+5.
+SELECT 
+    MAX(department_id) AS max_department_id
+FROM employees
+WHERE DAY(hire_date) > DAY(LAST_DAY(hire_date)) - 7;
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+COUNT , SUM Functions:
+
+
+Syntax:
+
+COUNT(Column/expression)------->and------->SUM(column/expression);
+
+
+Example:
+
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+
+
+
+select count(empid),sum(sal)
+from emp;
+
+
+4	61800
+
+
+
+
+select count(empid),sum(1)---------->If you put 1 instead column it counts for 4 times irrespective of records
+from emp;
+
+output:
+4
+
+
+select count(empid),sum(2)
+from emp;
+
+output:
+8
+
+select count(empid),sum(3)
+from emp;
+
+output:
+12
+
+NOTE: COUNT(NumericValue)---->Not matter how much the number constant is ,it will provide  constant number 4 at all time even if you increase
+
+
+ASSIGNMENT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

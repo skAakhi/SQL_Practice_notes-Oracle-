@@ -1,0 +1,1290 @@
+
+
+
+
+
+Group by clause:
+
+
+Syntax:
+
+Select column1,Aggregate function(column/Name)
+From TableName
+Where condition
+Group by column
+Order by column [Asc|DESC]
+
+
+
+Example:
+
+select empid
+from emp
+group by empid;
+
+
+Initial data:
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+5	Aakhib	200000	27-11-03
+6	Rahu	20000	21-12-01
+7	siva	54330	05-09-02
+8	SasiDhar	200000	21-06-91
+
+
+After data:
+5
+6
+7
+8
+
+
+
+
+
+
+select empid,count(empid)
+from emp
+group by empid;
+
+
+5	2
+6	2
+7	2
+8	2
+
+
+
+
+
+ASSIGNMENT:
+
+1) give the max salary from each department from employee table 
+2) give the min salary from each department from employee table and salary should not be greater then 18000
+3) give the average  salary from each department from employee table and employee_id should be  greater then 105  
+4) give the department_id and count of employees from each department from employee table  and employee_id should be less then 200 and hire_date date should be before 2010
+5) tell me the output of following query:
+   select department_id , sum(salary) from employee where employee_id > 100 and salary > 2000 group by department_id
+6) tell me the output of following query
+   select department_id , salary , sum(salary) from employee where employee_id > 100 and salary > 2000 group by department_id
+
+
+
+
+
+
+
+
+ANS:
+
+1.
+select empid,max(sal) as "MaxSal"
+from emp 
+group by empid;
+
+
+5	200000
+6	30000
+7	54330
+8	200000
+
+
+
+2.
+SELECT department_id, MIN(salary) AS min_salary
+FROM employee
+WHERE salary <= 18000
+GROUP BY department_id;
+
+
+(or)
+
+select empid,min(sal) as "MinSal"
+from emp 
+where sal<=18000
+group by empid;
+
+
+Initial data:
+
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+5	Aakhib	200000	27-11-03
+6	Rahu	20000	21-12-01
+7	siva	54330	05-09-02
+8	SasiDhar	200000	21-06-91
+
+
+
+After data:
+7	6400
+8	5400
+
+
+
+
+3.
+SELECT department_id, AVG(salary) AS avg_salary
+FROM employee
+WHERE employee_id > 105
+GROUP BY department_id;
+
+
+
+4.
+SELECT department_id, COUNT(*) AS employee_count
+FROM employee
+WHERE employee_id < 200 
+  AND hire_date < TO_DATE('01-JAN-2010', 'DD-MON-YYYY')
+GROUP BY department_id;
+
+
+
+(or)
+
+4.1
+select empid,count(*) as Count_emp
+from emp 
+where empid<200 and hiredate<TO_DATE('01-JAN-2010','DD-MON-YYYY')
+group by empid;
+
+
+empid  count_emp
+5	1
+6	1
+7	1
+
+
+
+
+
+5.
+select empid,sum(sal)
+from emp 
+group by empid;
+
+
+Initial data:
+
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+5	Aakhib	200000	27-11-03
+6	Rahu	20000	21-12-01
+7	siva	54330	05-09-02
+8	SasiDhar	200000	21-06-91
+
+
+
+After data:
+5	220000
+6	50000
+7	60730
+8	205400
+
+
+
+
+
+
+5.---->Error [Cannot select two columns untill you include it in groupBy clause]
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Having clause:
+
+Note: We cannot use aggregate functions in where condition
+
+
+Syntax:
+
+Select column1,Aggregate function(column/Name)
+From TableName
+Where condition
+Group by column
+Having condition---------------------------------->can use group by clause,aggregate functions.....
+
+
+
+
+Example:
+
+1.Selecting empids where same empid is repeated greater than or equal to 3
+
+select empid,count(empid) as Emp_count
+from emp 
+group by empid
+having count(empid)>=3;
+
+
+output:
+empid  count_emp
+5	3
+6	3
+
+
+
+
+ASSIGNMENT:
+
+1) give the max salary from each department from employee table and max salary should be greater then 1000
+2) give the min salary from each department from employee table and salary should not be greater then 18000 also min salary should be less then 5000
+3) give the average  salary from each department from employee table and employee_id should be  greater then 105
+4) give the department_id and count of employees from each department from employee table  and employee_id should be less then 200 
+  and hire_date date should be before 2010 also count of employee in each each department should be greater then 5
+5) tell me the output of following query:
+   select department_id , sum(salary) from employee where employee_id > 100 and salary > 2000 group by department_id having sum(salary) > 30000
+6) tell me the output of following query
+   select department_id , salary , sum(salary) from employee where employee_id > 100 and salary > 2000 group by department_id having sum(salary) > 30000
+
+
+
+
+ANS:
+
+1.
+SELECT department_id, MAX(salary) AS max_salary
+FROM employee
+GROUP BY department_id
+HAVING MAX(salary) > 1000;
+
+
+
+(or)
+
+1.1
+select empid,max(sal) as Max_sal
+from emp 
+group by empid
+having max(sal)>1000;
+
+
+Initial data:
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+5	Aakhib	200000	27-11-03
+6	Rahu	20000	21-12-01
+7	siva	54330	05-09-02
+8	SasiDhar	200000	21-06-91
+5	taslim	43000	27-11-03
+6	Parveen	88000	21-12-07
+
+
+
+After data:
+empid    Max_sal
+5	200000
+6	88000
+7	54330
+8	200000
+
+
+
+
+
+2.
+SELECT department_id, MIN(salary) AS min_salary
+FROM employee
+WHERE salary <= 18000
+GROUP BY department_id
+HAVING MIN(salary) < 5000;
+
+
+
+
+3.
+SELECT department_id, AVG(salary) AS avg_salary
+FROM employee
+WHERE employee_id > 105
+GROUP BY department_id;
+
+
+
+
+
+
+4.
+SELECT department_id, COUNT(*) AS employee_count
+FROM employee
+WHERE employee_id < 200  AND hire_date < TO_DATE('01-JAN-2010', 'DD-MON-YYYY')
+GROUP BY department_id
+HAVING COUNT(*) > 5;
+
+
+
+5.
+SELECT department_id, SUM(salary) 
+FROM employee 
+WHERE employee_id > 100 AND salary > 2000 
+GROUP BY department_id 
+HAVING SUM(salary) > 30000;
+
+
+department_id: This will be the ID of the department.
+SUM(salary): This will be the total salary for employees in each department that meet the filter conditions (employee_id > 100 and salary > 2000), 
+and whose total salary exceeds 30,000.
+
+
+
+
+6.Error
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+CONSTRAINTS: [When we want to impose some rules on particular column or certain location we make we use of this]
+
+
+
+Types:
+
+1.NOT NULL
+
+2.Unique key
+
+3.Primary key
+
+4.foreign key
+
+5.check key
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+1.NOT NULL:-------------------------------->Which will not allow you to insert null values in column
+[Practice code in my sql developer]
+
+create table cust(
+ id Number(10)Not null,
+ Name varchar2(50),
+ Address varchar(60)
+ );
+ 
+ 
+ Alter table cust modify id Number(10) NOT NULL;
+ 
+ delete cust;
+ 
+ drop table cust;
+ 
+ desc cust;
+ 
+ select * from cust;
+ 
+ insert into cust (id,name,address) values(NUll,'Aakhib','Ongole');
+ insert into cust (id,name,address) values(1,'Ammu','Ongole');
+ insert into cust (id,name,address) values(NUll,'Sravya','Ongole');
+ 
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+2.UNIQUE CONSTRAINT:----------------------->Which will allow you to insert only unique values at particular column
+
+
+
+Example:
+
+create table cust(
+ id Number(10),
+ Name varchar2(50),
+ Address varchar(60)
+ );
+ 
+ 
+ Alter table cust modify id Number(10) unique ;
+ 
+ delete cust;
+ 
+ drop table cust;
+ 
+ desc cust;
+ 
+ select * from cust;
+ 
+ insert into cust (id,name,address) values(NUll,'Aakhib','Ongole');
+ insert into cust (id,name,address) values(1,'Ammu','Ongole');
+ insert into cust (id,name,address) values(1,'Sravya','Ongole');
+ 
+ 
+output:
+
+if we try to insert same value
+
+insert into cust (id,name,address) values(1,'Sravya','Ongole')
+Error report -
+ORA-00001: unique constraint (SYS.SYS_C008222) violated
+
+https://docs.oracle.com/error-help/db/ora-00001/
+
+More Details :
+https://docs.oracle.com/error-help/db/ora-00001/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+3. Primary key : ---------------> Which will not allow NULL values and allow only unique elements  (or) combination of NULL and unique elements
+
+
+
+Practice code:
+
+create table cust(
+ id Number(10),
+ Name varchar2(50),
+ Address varchar(60)
+ );
+ 
+ 
+ Alter table cust modify id Number(10) primary key ;
+ 
+ delete cust;
+ 
+ drop table cust;
+ 
+ desc cust;
+ 
+ select * from cust;
+ 
+ insert into cust (id,name,address) values(NUll,'Aakhib','Ongole');
+ insert into cust (id,name,address) values(1,'Ammu','Ongole');
+ insert into cust (id,name,address) values(1,'Sravya','Ongole');
+ 
+
+
+
+ASSIGNMENT:
+
+1) Create table with emp_id column and add primary key constraint on emp_id column 
+2) add the primary key constraint on existing column of table
+3) Apply primary constraint with combination of two column emp_id + first_name
+4) try to add more then one primary key in one table
+5) remove primary key from table emp_id column
+
+
+
+ANS:
+
+1.
+CREATE TABLE employee (
+    emp_id NUMBER(10) PRIMARY KEY,
+    name VARCHAR2(50),
+    salary NUMBER(10, 2),
+    department_id NUMBER(5)
+);
+
+
+ALTER TABLE employee
+ADD CONSTRAINT pk_emp_id PRIMARY KEY (emp_id);
+
+
+Here, pk_emp_id is the name of the primary key constraint, which you can customize.
+
+
+
+
+2.
+ALTER TABLE employee
+ADD CONSTRAINT pk_emp_id PRIMARY KEY (emp_id);
+
+
+
+
+
+3.
+CREATE TABLE employee (
+    emp_id NUMBER(10),
+    first_name VARCHAR2(50),
+    last_name VARCHAR2(50),
+    salary NUMBER(10, 2),
+    department_id NUMBER(5),
+    CONSTRAINT pk_emp PRIMARY KEY (emp_id, first_name)
+);
+
+
+
+ALTER TABLE employee
+ADD CONSTRAINT pk_emp PRIMARY KEY (emp_id, first_name);
+
+
+
+
+(or)
+
+3.1
+
+create table cust(
+ id Number(10),
+ Name varchar2(50),
+ Address varchar(60),
+ constraint pk_cust primary key (id,name)
+ );
+ 
+
+
+
+
+
+4.
+CREATE TABLE example_table (
+    emp_id NUMBER(10),
+    first_name VARCHAR2(50),
+    last_name VARCHAR2(50),
+    department_id NUMBER(5),
+    CONSTRAINT pk_example PRIMARY KEY (emp_id, first_name), -- Composite primary key
+    CONSTRAINT uq_last_name UNIQUE (last_name, department_id) -- Unique constraint
+);
+
+
+
+ALTER TABLE table_name
+ADD CONSTRAINT primary_key_name PRIMARY KEY (column1, column2);
+
+
+
+
+ALTER TABLE table_name
+ADD CONSTRAINT unique_key_name UNIQUE (column3, column4);
+
+
+
+
+
+
+5.
+1.
+For primary key:
+
+Alter table cust 
+ drop constraint pk_cust;
+ 
+
+
+
+2.
+Unique and primary keys:
+
+CREATE TABLE example_table (
+    emp_id NUMBER(10),
+    first_name VARCHAR2(50),
+    last_name VARCHAR2(50),
+    department_id NUMBER(5),
+    CONSTRAINT pk_example PRIMARY KEY (emp_id, first_name), -- Composite primary key
+    CONSTRAINT uq_last_name UNIQUE (last_name, department_id) -- Unique constraint
+);
+ 
+ 
+ desc example_table;
+ 
+ alter table example_table
+ drop constraint uq_last_name;
+ 
+ alter table example_table
+ drop constraint  pk_example;-------------->If there is primary key for multiple columns
+ 
+
+
+
+3.
+Foreign key:|| check constraint
+
+ALTER TABLE table_name
+DROP CONSTRAINT constraint_name;
+
+
+
+4.
+Default constraint:
+
+ALTER TABLE table_name
+MODIFY column_name DROP DEFAULT;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+4.Foreign key:[If you insert any id value in parent table then only can able to insert same id in child table which reference to foreign key] 
+
+Syntax:
+
+Create Table <TableName>(
+variable1 dataType1
+variable2 dataType2
+
+Constraint Fk_Name foreign key (columnName)
+References Parent_table_Name (ColumnTableName)
+);
+
+
+
+Example:[practice code]
+
+//Parent table
+create table cust(
+ dept_id Number(10),
+ Name varchar2(50),
+ Address varchar(60),
+ constraint pk_cust primary key (dept_id)
+ );
+ 
+
+
+
+//Child table 
+ create table dept(
+ dept_id Number(10),
+ Branch varchar2(50),
+ constraint fk_cust foreign key(dept_id)
+ references cust(dept_id)
+ );
+ 
+ insert into cust (dept_id,Name,address) values(30,'developer','ongole');
+ 
+ insert into cust (dept_id,Name,address) values(40,'devops','ongole');
+ 
+ 
+ insert into dept (dept_id,Branch) values(30,'developer');
+ 
+ insert into dept (dept_id,Branch) values(40,'full stack');
+
+ 
+ 
+ select * from dept;
+ 
+ 
+ select * from cust;
+
+
+
+
+
+output:
+
+30	developer
+40	full stack
+
+30	developer	ongole
+40	devops	        ongole 
+
+
+
+
+
+
+
+
+
+
+
+
+ASSIGNMENT:
+1) Create table with dept_id column and add foreign key constraint on dept_id column 
+2) add the foreign key constraint on existing column of table
+3) Apply foreign key constraint with combination of two column dept_id + first_name
+4) try to add more then one foreign key in one table
+5) remove foreign key from table dept_id column
+
+
+
+
+
+
+ANS:
+
+------------------------------------------------------------------------------------------------------------------------- 
+
+
+CHECK CONSTRAINT:
+
+Create table <TableName>(
+
+Column1 dataType1
+Column2 dataType2
+
+Constraint Name Check condition
+);
+
+
+Practice code:
+elect * from cust;
+
+select * from dept;
+
+select * from emp;
+
+
+
+UPDATE emp
+SET gender = 'magaadu'
+WHERE empid = 5;
+
+
+insert into emp (gender) values('female');
+
+
+desc cust;
+
+desc dept;
+
+desc emp;
+
+alter table emp add  gender varchar2(10);
+
+alter table emp add constraint gen_con check(gender in('male','female'));
+
+
+
+
+
+
+
+
+ASSIGNMENT:
+
+1) Create table with dept_id column and add check  constraint where dept_id  >=100
+2) add the check  constraint on existing column (salary >= 1000 and salary <=300000) of an employee table
+3) try to add more then one chek constraint on one table
+4) remove check constraint  from table ( dept_id column)
+
+
+
+
+ANS:
+
+1.
+CREATE TABLE department (
+    dept_id NUMBER CONSTRAINT chk_dept_id CHECK (dept_id >= 100),
+    dept_name VARCHAR2(50)
+);
+
+
+
+-- Valid Insertion
+INSERT INTO department (dept_id, dept_name)
+VALUES (101, 'HR');
+
+-- Invalid Insertion
+INSERT INTO department (dept_id, dept_name)
+VALUES (99, 'Finance');
+-- Error: ORA-02290: check constraint (CHK_DEPT_ID) violated
+
+
+
+
+
+
+2.
+
+ALTER TABLE employee
+ADD CONSTRAINT chk_salary CHECK (salary >= 1000 AND salary <= 300000);
+
+
+
+
+-- Valid Insertion
+INSERT INTO employee (id, name, salary)
+VALUES (1, 'Alice', 2000);
+
+-- Invalid Insertion
+INSERT INTO employee (id, name, salary)
+VALUES (2, 'Bob', 500);
+-- Error: ORA-02290: check constraint (CHK_SALARY) violated
+
+
+
+
+
+3.
+CREATE TABLE employee (
+    emp_id NUMBER,
+    emp_name VARCHAR2(50),
+    salary NUMBER CONSTRAINT chk_salary CHECK (salary >= 1000 AND salary <= 300000),
+    age NUMBER CONSTRAINT chk_age CHECK (age >= 18 AND age <= 65)
+);
+
+
+
+
+ALTER TABLE employee
+ADD CONSTRAINT chk_salary CHECK (salary >= 1000 AND salary <= 300000);
+
+ALTER TABLE employee
+ADD CONSTRAINT chk_age CHECK (age >= 18 AND age <= 65);
+
+
+
+
+
+-- Valid Insertion
+INSERT INTO employee (emp_id, emp_name, salary, age)
+VALUES (1, 'Alice', 5000, 30);
+
+-- Invalid Insertion for salary
+INSERT INTO employee (emp_id, emp_name, salary, age)
+VALUES (2, 'Bob', 500, 30);
+-- Error: ORA-02290: check constraint (CHK_SALARY) violated
+
+-- Invalid Insertion for age
+INSERT INTO employee (emp_id, emp_name, salary, age)
+VALUES (3, 'Charlie', 10000, 70);
+-- Error: ORA-02290: check constraint (CHK_AGE) violated
+
+
+
+
+
+
+4.
+[Example]
+ALTER TABLE department
+DROP CONSTRAINT chk_dept_id;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+JOINS:[When you want to extract information from more than one table then we use joins from multiple tables to retrive informaton]
+
+
+Types:
+
+1.Cross join 
+
+2.Inner join
+
+3.Self join
+
+4.Outter join(Three sub types)
+a)Left outter join
+b)Right outter join
+c)Full outer join
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+1.Cross Join:[first table rows * second table rows=result rows]
+
+Syntax:
+
+select * from <TableName1> , <TableName2>;
+
+
+ASSIGNMENT:
+
+1) Give the Cartesian product of employee and department table 
+2) Display the department id from employee and department table separate separate
+3) Give the Cartesian product of any three table
+4) first table have 3 and second table has 5 rows and if we apply Cartesian product then how many rows will be in output table
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+
+
+2.Inner join:[Retriving common information among the tables] 
+
+Syntax:
+
+Select columnName,....
+from Table1 InnerJoin Table2
+ON Table1.columnName=Table2.column;
+
+
+Practice code:
+
+select c.dept_id,c.name,d.branch
+from cust c inner join dept d
+on c.dept_id=d.dept_id;
+
+
+
+30	developer	developer
+40	devops	       full stack
+
+
+
+
+
+(or)
+
+SELECT 
+    c.dept_id, 
+    c.name, 
+    d.branch,
+    d.location
+FROM 
+    cust c
+INNER JOIN 
+    dept d 
+    ON c.dept_id = d.dept_id
+WHERE 
+    d.status = 'Active'
+ORDER BY 
+    c.name;
+
+
+
+
+ASSIGNMENT:
+
+1) Display the department numbers from department table which are not present in employee table
+2) Select Department number and department name in which at least 3 member working
+3) Select Department number and department name in which at least 3 member working and salary is in 3 digit
+4) Select Department number and department name in which maximum salary greater then 3000
+5) Select the Department number , department name and average of each department
+6) Select the department name and department location  of employee 100 , 101 , 102
+
+
+
+
+ANS:
+
+1.
+ you can use the NOT IN or LEFT JOIN approach
+
+1 WAY:
+
+SELECT dept_id
+FROM department
+WHERE dept_id NOT IN (SELECT dept_id FROM employee);
+
+
+2 WAY:
+
+SELECT d.dept_id
+FROM department d
+LEFT JOIN employee e
+ON d.dept_id = e.dept_id
+WHERE e.dept_id IS NULL;
+
+
+Table: department
+
+dept_id	dept_name
+101	HR
+102	IT
+103	Marketing
+
+
+Table: employee
+
+emp_id	emp_name	dept_id
+1	Alice	          101
+2	Bob	          102
+Result:
+The query would return:
+
+dept_id
+103  
+
+
+
+
+
+
+
+2.
+SELECT d.dept_id, d.dept_name
+FROM department d JOIN employee e 
+ON d.dept_id = e.dept_id
+GROUP BY d.dept_id, d.dept_name
+HAVING COUNT(e.emp_id) >= 3;
+
+
+
+
+
+
+
+3.
+SELECT d.dept_id, d.dept_name
+FROM department d
+JOIN employee e ON d.dept_id = e.dept_id
+WHERE e.salary BETWEEN 100 AND 999
+GROUP BY d.dept_id, d.dept_name
+HAVING COUNT(e.emp_id) >= 3;
+
+
+
+
+
+
+4.
+SELECT d.dept_id, d.dept_name
+FROM department d
+JOIN employee e ON d.dept_id = e.dept_id
+GROUP BY d.dept_id, d.dept_name
+HAVING MAX(e.salary) > 3000;
+
+
+
+
+
+
+5.
+SELECT d.dept_id, d.dept_name, AVG(e.salary) AS avg_salary
+FROM department d
+JOIN employee e ON d.dept_id = e.dept_id
+GROUP BY d.dept_id, d.dept_name;
+
+
+
+
+
+
+
+
+6.
+SELECT d.dept_name, d.location
+FROM department d
+JOIN employee e ON d.dept_id = e.dept_id
+WHERE e.emp_id IN (100, 101, 102);
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3.Left outter join:[Retrive all information from left table and common information from right table] remaining is filled as NULL
+
+
+
+
+Syntax:
+
+Select columnName,....
+from Table1 Left outter Join Table2
+ON Table1.columnName=Table2.column;
+
+
+
+
+Collected Example:
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+
+
+NO ASSIGNMENT
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+4.
+
+Right outter Join:[Opposite to left outter join]
+
+
+
+Synatx:
+
+Select columnName,....
+from Table1 Right outter Join Table2
+ON Table1.columnName=Table2.column;
+
+
+
+ASSIGNMENT:
+
+1) Display Emp id , department id  , department name , also preserve all the rows from right side of table
+2) Display Emp id , department id  , department name for employee 100,200,300 and preserve all the rows from right side of table
+3) Display Emp id , department id  , department name whose name start with 'R' and end with 'S' and preserve all the rows from right side of table
+4) Display Emp id , department id  , department name whose salary in 3 digit and preserve all the rows from right side of table
+5) Display Emp id , department id  , department name whose hired between 2003 and 2004 and preserve all the rows from right side of table
+6) Display Emp name (firt 4 letter) , department id  , department name whose name contain 'E' and preserve all the rows from right side of table
+
+
+
+
+
+ANS:
+
+
+1.
+SELECT e.emp_id, e.dept_id, d.dept_name
+FROM employee e
+RIGHT JOIN department d ON e.dept_id = d.dept_id;
+
+
+
+Table: employee
+
+emp_id	emp_name	dept_id	  salary
+100	Alice	           1	   3200
+101	Bob	           2	   4000
+
+Table: department
+
+dept_id	dept_name
+1	HR
+2	IT
+3	Marketing
+
+Query Result:
+
+emp_id	dept_id	dept_name
+100	1	HR
+101	2	IT
+NULL	3	Marketing
+
+
+
+
+
+2.
+SELECT e.emp_id, e.dept_id, d.dept_name
+FROM employee e
+RIGHT JOIN department d ON e.dept_id = d.dept_id
+WHERE e.emp_id IN (100, 200, 300) OR e.emp_id IS NULL;
+
+
+
+
+
+3.
+SELECT e.emp_id, e.dept_id, d.dept_name
+FROM employee e
+RIGHT JOIN department d ON e.dept_id = d.dept_id
+WHERE d.dept_name LIKE 'R%s';
+
+
+
+
+4.
+SELECT e.emp_id, e.dept_id, d.dept_name
+FROM employee e
+RIGHT JOIN department d ON e.dept_id = d.dept_id
+WHERE e.salary BETWEEN 100 AND 999 OR e.salary IS NULL;
+
+
+
+
+5.
+SELECT e.emp_id, e.dept_id, d.dept_name
+FROM employee e
+RIGHT JOIN department d ON e.dept_id = d.dept_id
+WHERE e.hire_date BETWEEN TO_DATE('2003-01-01', 'YYYY-MM-DD') 
+                        AND TO_DATE('2004-12-31', 'YYYY-MM-DD')
+                        OR e.hire_date IS NULL;
+
+
+
+
+
+
+
+
+6.
+select substr(c.name,1,4 ),c.dept_id,c.name,d.branch
+from dept d right outer join cust c
+on c.dept_id=d.dept_id
+where c.name like '%e%' or c.name is NULL;
+
+
+Note:It is acting as case_sensitive [if dosent work in your tool work with below command]
+
+
+select substr(c.name,1,4 ),c.dept_id,c.name,d.branch
+from dept d right outer join cust c
+on c.dept_id=d.dept_id
+where upper(c.name) like '%E%' or c.name is NULL;
+
+
+
+output:
+deve	30	developer	developer
+devo	40	devops	        full stack
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+5.Full outer join: [It is combination of left outer join and right outer join]
+
+Example:
+Employee table:
+
+empid   deptid
+100       10
+101       20
+102       30
+
+Department table:
+
+deptid  deptName
+10       sales
+20       Account
+40       Finance
+
+
+empid  e.deptid   d.deptid  deptName
+100       10        10        sales
+101       20        20        Account
+102       30        NULL      NULL
+NULL      NULL      40        Finance
+
+
+
+
+COMMAND:
+
+select empid,e.deptid,d.deptid,deptName
+from employee e FULL OUTER JOIN department d
+ON e.deptid=d.deptid;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+SUB QUERY : [You can use subquery in from,having where clauses]
+
+
+Syntax:
+
+select column
+from TableName
+where (select column
+        from TableName
+         where condition);
+
+
+
+(or)
+
+
+select column
+from (select column
+        from TableName
+         where condition)
+where condition;
+
+
+
+NO ASSIGNMENT
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

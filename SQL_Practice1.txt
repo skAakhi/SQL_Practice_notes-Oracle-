@@ -1,0 +1,1169 @@
+Data_types:
+
+1.Number
+
+2.CHAR
+->char--------------->2000Bytes(fixed length)
+->varchar2----------->4000Bytes(variable length
+->varchar
+->Nvarchar2
+->NcharVarchar2
+
+
+3.Long------------>number/character
+
+
+4.Date---------------------------------------->Example: to_date('30-12-2024','DD-MM-YY'); OR to_date('301224','DDMMYY');
+
+5.RAW------->Textfile/binaryfile  etc...
+->BLOB
+->CLOB
+->NCLOB
+
+
+6.RowID------->
+
+
+
+
+----------------------------------------------------------------------------
+
+Feature	                VARCHAR	                            VARCHAR2
+Current Usage	Deprecated and not recommended	Actively used and recommended
+Space Handling	Implementation-dependent	Automatically trims trailing spaces
+Future Behavior	Could change in future Oracle releases	Consistent and predictable
+Standard Compliance	ANSI SQL standard	Oracle-specific enhancement
+
+
+Recommendation:
+Always use VARCHAR2 when defining variable-length character fields in Oracle, as it is more reliable and future-proof.
+
+--------------------------------------------------------------------------------------------
+
+desc----->will give you the current status of table if it is exist or not
+
+example:
+desc <TableName>
+
+
+------------------------------------------------------------------------------------------------------
+SELECT USER FROM DUAL;------->to check on which schema user is working on
+
+-------------------------------------------------------------------------------------------------------------------
+Alter:
+1.Adding coloumn
+2.Rename cooumn
+3.Remove coloumn
+4.Modify data_type
+
+
+Example:
+
+desc employee;
+
+
+
+
+create table employee(
+empid Number(10),
+Name varchar2(40),
+sal char(10),
+DOB date
+);
+
+--Alter table employee add employ_id number(20); 
+--
+--Alter table employee rename column employ_id to employee_id ;
+--
+--Alter table employee drop column employee_id;
+--
+--alter table employee modify sal varchar2(20);
+
+
+SELECT * FROM employee;
+
+
+------------------------------------------------------------------------------------------------------------------
+Rename:
+
+rules:
+0.if any foreign key, any synonym,any triggers points to that particular table on those cases cannot create rename operation
+
+
+1.it can be performed to rename tables/synonyms/views/sequences
+
+2.To rename table/object you must be the DB owner or table owner
+
+
+
+
+
+Example:
+
+syntax: Rename <oldTable> To <NewTable>
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+SELECT:
+
+
+SELECT *FROM emp;
+
+SELECT * FROM emp WHERE empid=4;
+
+SELECT name from emp where name='Aakhib';
+
+SELECT * FROM emp where salary>6000;
+
+Assignment question:
+1.Display firstName of the employee who hired before 01Jan2017
+Ans.SELECT firstName
+FROM employees
+WHERE hireDate < TO_DATE('01-JAN-2017', 'DD-MON-YYYY');
+
+
+2.Select only name and id of all your employees
+ANS:SELECT name,empid FROM emp;
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Drop:[Deletes entire table/obj/view inside the values of table will be deleted, including with memory would be deallocated]
+
+1.If you drop the any other (View/synonums) that will be invalid
+
+2.Only DB owner/Table owner/Previlaged user have authority to drop the table 
+
+3.Once the data had deleted it is irreversable
+
+
+
+Example syntax:
+
+Drop Table <Table_Name>;
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Truncate:[Only Deletes entire data/table/view Once deleted the data it cannot be rollback] 
+
+
+
+TRUNCATE TABLE <Table_Name>;
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT:
+
+Ways:
+1.With coloumn
+2.Without coloumn
+
+
+
+Example:
+
+1.1
+create table emp(
+empid Number,
+Name varchar2(200),
+sal Decimal(10,2)
+);
+
+DESC emp;
+
+
+INSERT INTO emp (empid,name,sal) VALUES(1,'Aakhib',10000);
+INSERT INTO emp (empid,name,sal) VALUES(2,'Afzal',50000);
+INSERT INTO emp (empid,name,sal) VALUES(3,'Karimulla',6000);
+INSERT INTO emp (empid,name,sal) VALUES(4,'Raghuram',7500);
+
+SELECT * FROM emp;
+
+
+
+
+1.2
+create table emp(
+empid Number,
+Name varchar2(200),
+sal Decimal(10,2)
+);
+
+DESC emp;
+
+
+INSERT INTO emp columns(empid,name,sal) VALUES(5,'Raju',20000);
+INSERT INTO emp columns(empid,name,sal) VALUES(6,'sita',30000);
+INSERT INTO emp columns(empid,name,sal) VALUES(7,'gopi',6400);
+INSERT INTO emp columns(empid,name,sal) VALUES(8,'sravya',5400);
+
+SELECT * FROM emp;
+
+
+
+
+2.1
+
+create table emp(
+empid Number,
+Name varchar2(200),
+sal Decimal(10,2)
+);
+
+DESC emp;
+
+
+INSERT INTO emp VALUES(1,'Aakhib',10000);
+INSERT INTO emp VALUES(2,'Afzal',50000);
+INSERT INTO emp VALUES(3,'Karimulla',6000);
+INSERT INTO emp VALUES(4,'Raghuram',7500);
+
+SELECT * FROM emp;
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Delete:
+
+1.The table should be in you schema
+
+2.We should have all prebilages to delete all data
+
+3.If the table is created by other user , then you cannot delete the data without his permission
+
+
+
+Syntax:
+
+Delete from <Table_nmae> Where condition----------[where condition is absent if there is no condition it can be delete entire table]
+
+
+Example:
+
+DELETE FROM emp WHERE empid=6;
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Update:[Note:Rules are same as Delete rules]
+
+
+
+Syntax:Update <Table_name> set <Column_name> = Value Where condition-----------------> [Where condition is optional]
+
+
+or
+UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;
+
+
+
+
+Example:
+1.
+update emp set empid=6 where empid=8;
+
+2.
+UPDATE employee
+SET Salary = 5000
+WHERE EmployeeID = 101;
+
+
+3.
+UPDATE employee
+SET Salary = 5500, Department = 'HR'
+WHERE EmployeeID = 102;
+
+
+4.
+UPDATE employee
+SET Salary = 6000;
+This updates the Salary to 6000 for all employees in the employee table. Be careful when running such queries.
+
+
+5.
+UPDATE employee
+SET Salary = Salary * 1.10  -- Increase salary by 10%
+WHERE Department = 'Sales';
+
+This increases the Salary by 10% for all employees in the 'Sales' department.
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit:[It is like permenant save of all transcations mean if you commit in one instance will reflect all its transcations to other instances as well also]
+
+RollBack:[It is like undo operation , makesure that you do RollBack before you  commit]
+
+
+Icon : Blue(Green tick) is for commit
+
+Icon: Red(Red arrow towards back) is for RollBack
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+Logical operators:
+
+
+1.AND [Mul] 
+
+2.OR  [ADD]
+
+3.NOT  [True-->False  (or) False---->True]
+
+
+
+
+Example:
+
+1.
+SELECT * from emp where empid=7
+AND sal<6000;
+
+1.1
+SELECT name,sal from emp where empid=7------------>can select multiple columns
+AND sal<6000;
+
+2.
+SELECT * from emp where empid=7
+OR sal<6000;
+
+
+2.1
+SELECT name,sal from emp where empid=7
+Or sal<6000;
+
+
+
+Assignment:
+
+1.Display  empid,salary,job,from employee table whose sal is greater than 8000 and job is equal to manager
+
+
+2.Display empid,firstName,salary,deptId from the employees table whose salary is greater than equal to 20000 or deptId is eqal to 20
+
+
+3.Display the empId,FirstName,job,HireDate from employee table whose department_ID 10 0r 20 0r job is equal to Manager
+
+
+4.Display empId,FirstName,job,salary from employee table whose firstName is not 'smith'.
+
+
+5.Display empId,FirstName,job,salary from employee table whose job is president or analyst and salary is greater than 3000 
+
+
+
+ANSWERS:
+1.
+SELECT empid, salary, job
+FROM employee
+WHERE salary > 8000 AND job = 'manager';
+
+
+2.
+
+SELECT empid, firstName, salary, deptId
+FROM employees
+WHERE salary >= 20000 OR deptId = 20;
+
+
+3.
+SELECT empId, FirstName, job, HireDate
+FROM employee
+WHERE department_ID IN (10, 20) OR job = 'Manager';
+
+
+4.
+
+SELECT empId, FirstName, job, salary
+FROM employee
+WHERE FirstName != 'smith';--------------->(or) WHERE FirstName <> 'smith';
+
+
+
+5.
+
+SELECT empId, FirstName, job, salary
+FROM employee
+WHERE (job = 'President' OR job = 'Analyst') AND salary > 3000;
+
+
+--------------------------------------------------------------------------------------------------------------------------
+Arthematic operators :[Can perfrom with columns to columns but dataType should be same and in where clause can be perfrom arthematic operations]
+
+1.ADDITION
+
+2.SUBTRACTION
+
+3.MULTIPLICATION
+
+4.DIVISION
+
+
+Note: This can  be perfomed on columns and in where clause 
+
+Example: 
+
+SELECT empid+sal from emp WHERE empid=7;
+
+SELECT empid,sal from emp WHERE empid+sal=7000;
+
+
+
+Assignment:
+
+1.Display salary by adding 500 also display empId,FirstName from employee table.
+
+2.Display empId by adding 10,FirstName,salary from employee table
+
+3.Display empId by adding by DeptId,FirstName from employee table
+
+4.Display empId,FirstName,salary,12*salary+500 foremployee table where empId greater than 200
+
+
+
+ANS:
+
+1.
+SELECT empId, FirstName, salary + 500 AS UpdatedSalary
+FROM employee;
+
+
+
+2.
+SELECT empId + 10 AS UpdatedEmpId, FirstName, salary
+FROM employee;
+
+
+
+3.
+SELECT empId + DeptId AS CombinedId, FirstName
+FROM employee;
+
+
+
+4.
+SELECT empId, FirstName, salary, 12 * salary + 500 AS AnnualSalaryWithBonus
+FROM employee
+WHERE empId > 200;
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+
+
+COMPARISION OPERATORS:
+
+1.=
+
+2.!=  (OR) ^=  (OR) <>
+
+3.<
+
+4.>
+
+5.<=
+
+6.>=
+
+
+
+Assignment:
+
+1.Select deptId,hire_date from employee table where salary is greater than equal to 10000 or deptId is less than equal to 90
+
+SELECT deptId, hire_date
+FROM employee
+WHERE salary >= 10000 OR deptId <= 90;
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+LIKE OPERATOR :  ---->(%)
+
+[%word---.ends with] and [word% starts with]   and [word%word starts and ends with]  and[%word%word% in between words matching]
+
+
+ASSIGNMENT:
+
+
+1.Display the employees whose firstName starts with 'R'
+
+2.Display the employees whose FirstName start with's' and end with 'n'
+
+3.List employees FirstName start with 'TH' or 'LL'
+
+4.Display the FirstName,jobId of employees whose name starts with alphabet M
+
+
+
+
+ANS;
+
+1.
+SELECT *
+FROM employee
+WHERE FirstName LIKE 'R%';
+
+
+2.
+SELECT *
+FROM employee
+WHERE FirstName LIKE 'S%n';
+
+
+
+3.
+SELECT *
+FROM employee
+WHERE FirstName LIKE 'TH%' OR FirstName LIKE 'LL%';
+
+
+
+4.
+SELECT FirstName, jobId
+FROM employee
+WHERE FirstName LIKE 'M%';
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+IN operator :[ It will act like OR operator substitution]
+
+Assignment:
+
+1.Display FirstName,salary,DeptId from employee table whose DeptId is 20 and 30
+
+2.Display FirstName,salary,jobId from employee table whose FirstName is 'Ford' and 'smith'
+
+3.Display FirstName,salary,Hire_date from employee table who is not hired on '01-jan-2001','22-feb-2007'.
+
+
+
+
+ANS:
+
+1.
+SELECT FirstName, salary, DeptId
+FROM employee
+WHERE DeptId IN (20, 30);
+
+
+
+2.
+SELECT FirstName, salary, jobId
+FROM employee
+WHERE FirstName IN ('Ford', 'Smith');
+
+
+
+3.
+SELECT FirstName, salary, Hire_date
+FROM employee
+WHERE Hire_date NOT IN (TO_DATE('01-JAN-2001', 'DD-MON-YYYY'), TO_DATE('22-FEB-2007', 'DD-MON-YYYY'));
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CONCATINATION OPERATOR:[||] It can combine two characters strings, columns,expressions,constants 
+
+
+Example:
+Table:emp
+empid    name    sal
+5	Raju	20000
+6	sita	30000
+7	gopi	6400
+8	sravya	5400
+
+1.SELECT empid||sal from emp;
+ans:empid||sal
+520000
+630000
+76400
+85400
+
+
+
+2.SELECT 'HELLO'||name FROM emp; 
+
+ans:'HELLO'||name
+HELLORaju
+HELLOsita
+HELLOgopi
+HELLOsravya
+
+
+
+
+ASSIGNMENT:
+1.Using concatenation operator,Display the FirstName and LastName[in single column] from employee table
+
+2.Increament salary by 10% of all the employee and display in seperate coloumn as follwed eg:"This is new salary after 10% increment XXXXX from employee table
+
+3.Display the following information from employee table  eg:"My name is:" FirstName and "My salary is:" salary  and "My department id is:"deptId 
+
+4.Display the FirstName and salary of employees in single coloumn from employee whose salary greater than 6000
+
+5.Display the FirstName and LastName(in single column) from employee table who hired between 01jan2003 to 01jan2004
+
+
+
+
+
+ANS:
+
+1.SELECT FirstName || ' ' || LastName AS FullName
+FROM employee;
+
+
+
+1.1
+SELECT CONCAT(FirstName, ' ', LastName) AS FullName
+FROM employee;
+
+
+1.2
+SELECT CONCAT('HELLO'||' ',name)AS FullName from emp;
+
+
+
+2.
+SELECT 
+    EmployeeID,
+    FirstName,
+    LastName,
+    Salary,
+    'This is new salary after 10% increment ' || (Salary * 1.10) AS NewSalaryMessage
+FROM 
+    employee;
+
+
+EmployeeID	   FirstName	LastName	Salary	        NewSalaryMessage
+
+101	             John	Doe	         50000	     This is new salary after 10% increment 55000
+102	             Jane	Smith	         60000	     This is new salary after 10% increment 66000
+
+
+
+
+
+
+
+
+
+3.
+SELECT 
+    'My name is: ' || FirstName || 
+    ' and My salary is: ' || Salary || 
+    ' and My department id is: ' || DeptId AS EmployeeInfo
+FROM 
+    employee;
+
+
+
+EmployeeInfo
+My name is: John and My salary is: 50000 and My department id is: 101
+My name is: Jane and My salary is: 60000 and My department id is: 102
+
+
+
+
+
+
+
+4.
+SELECT 
+    FirstName || ' earns a salary of ' || Salary AS EmployeeDetails
+FROM 
+    employee
+WHERE 
+    Salary > 6000;
+
+
+
+
+
+
+EmployeeDetails
+John earns a salary of 7000
+Jane earns a salary of 8000
+
+
+
+
+
+
+
+5.
+SELECT 
+    FirstName || ' ' || LastName AS FullName
+FROM 
+    employee
+WHERE 
+    HireDate BETWEEN TO_DATE('2003-01-01', 'YYYY-MM-DD') AND TO_DATE('2004-01-01', 'YYYY-MM-DD');
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Any operator:[It is like OR operator]
+
+
+Syntax:
+
+Select <column>
+from <TableName>
+where column1>Any(value1,value2,value3);
+
+
+Example:
+
+Old Technique:
+
+1.
+select * from emp
+whre sal>4200
+or sal>4800
+or sal>6000;
+
+
+Advance Technique[Using ANY operator]:
+
+1.1
+select * from emp
+where sal>ANY(4200,4800,6000);
+
+
+Note : This will return all records which greater than 4200,4800,6000 among all employees
+
+
+If you want to count number of records then 
+ex:
+SELECT count(*) FROM emp
+where sal<ANY(6000,10000);
+
+
+
+
+
+
+
+
+
+ASSSIGNMENT:
+
+1.Display FirstName,salary,jobId from employee table whose FirstName is'Ford' or 'smith' using any operator
+
+2.Display FirstName,salary,jobId from employee table whose deptId is 20 or 40 0r 30 using any operator
+
+3.Display FirstName,salary,HireDate from employee table who is not hired on '01-jan-2001' or '22-feb-2007' using any operator
+
+
+
+
+
+
+
+
+
+ans:
+1.
+SELECT 
+    FirstName, 
+    Salary, 
+    JobId
+FROM 
+    employee
+WHERE 
+    FirstName IN ('Ford', 'Smith');
+
+
+
+
+(or)
+
+1.1
+SELECT 
+    FirstName, 
+    Salary, 
+    JobId
+FROM 
+    employee
+WHERE 
+    FirstName = 'Ford' OR FirstName = 'Smith';
+
+
+
+
+
+
+2.
+SELECT Name, Sal
+FROM emp
+WHERE empid=ANY(5, 7, 8);
+
+
+(or)
+
+
+2.1
+SELECT Name, Sal
+FROM emp
+WHERE empid IN (5, 7, 8);
+
+
+
+
+
+3.
+SELECT FirstName, Salary, HireDate
+FROM employee
+WHERE HireDate <> ANY (TO_DATE('01-JAN-2001', 'DD-MON-YYYY'), TO_DATE('22-FEB-2007', 'DD-MON-YYYY'));
+
+
+
+
+3.1
+SELECT FirstName, Salary, HireDate
+FROM employee
+WHERE HireDate NOT IN (TO_DATE('01-JAN-2001', 'DD-MON-YYYY'), TO_DATE('22-FEB-2007', 'DD-MON-YYYY'));
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ALL operator:[It is like AND operator]
+
+
+SYNTAX:
+
+SELECT <column>
+FROM <TableName>
+WHERE column1>ALL (value1,value2,value3...);
+
+
+
+
+Example:
+
+1.Old Technique:
+
+Select * from employee
+where salary >4000
+and salary>4800
+and salary>6000;
+
+
+1.1 New Technique
+
+select * from employee
+where salary>ALL(4000,4800,6000);
+
+
+
+
+
+ASSIGNMENT:
+
+1.Display FirstName,salary,deptId from employee table whose FirstName is 'Ford' and 'smith' using all operator
+
+2.Display FirstName,salary,HireDate from employee table who is not hired on '01-jan-2001' or '22-feb-2007' using all operator
+
+
+
+
+ans:
+
+1.
+SELECT FirstName, Salary, DeptId
+FROM employee
+WHERE FirstName = ALL (SELECT FirstName FROM employee WHERE FirstName IN ('Ford', 'Smith'));
+
+
+(or)
+
+1.1
+SELECT FirstName, Salary, DeptId
+FROM employee
+WHERE FirstName IN ('Ford', 'Smith');
+
+
+
+
+
+
+2.
+SELECT FirstName, Salary, HireDate
+FROM employee
+WHERE HireDate NOT IN (TO_DATE('01-JAN-2001', 'DD-MON-YYYY'), 
+                       TO_DATE('22-FEB-2007', 'DD-MON-YYYY'));
+
+
+
+
+2.1
+SELECT Name, sal, HireDate
+FROM emp
+WHERE HireDate<> ALL(TO_DATE('01-JAN-2002', 'DD-MON-YYYY'), 
+                       TO_DATE('22-FEB-2003', 'DD-MON-YYYY'));
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+BETWEEN operator:
+
+
+Syntax:
+
+select * from <TableName>
+where <columnName> BETWEEN <LowerValue> AND <UpperValue>;
+
+
+
+Example:
+
+
+Old Technique:
+
+1.select * from emp
+where sal>=1000
+and sal<=10000;
+
+
+New Technique:
+1.1
+select * from emp
+where sal between 1000 and 10000;
+
+
+
+ASSIGNMENT:
+
+1.Display the salary from employee table whose salary between 4000 to 6000
+
+2.Display all records from employee table whose empId between the 5 to 10
+
+3.Display all employees from employee table who is hired date between 17-jun-03 to 17-sep-03
+
+
+
+
+Ans:
+
+1.
+select * from emp
+where sal between 4000 AND 6000;
+
+
+2.
+select * from emp
+where empid between 5 AND 10;
+
+
+3.
+SELECT *
+FROM employee
+WHERE HireDate BETWEEN TO_DATE('17-JUN-2003', 'DD-MON-YYYY') 
+                   AND TO_DATE('17-SEP-2003', 'DD-MON-YYYY');
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+NULL operator:[NULL is not equivalent to zero , it mean unavailable,unassigned,unknown,inapplicable]
+
+
+Syntax:
+
+select <columnName>
+from <TableName>
+where <ColumnName> is NULL;
+
+
+
+Example:
+1.
+select * from emp
+where empid is null
+
+
+
+
+2.
+select * from emp
+where HireDate is null;
+
+
+5	Raju	20000	
+6	sita	30000	
+7	gopi	6400	
+8	sravya	5400	
+
+
+
+
+ASSIGNMENT:
+
+1.Display all the employees from employee table where salary is equal to NULL
+
+2.Upate the empId with 100 where empId is equal to NULL in employee table
+
+3.Delete the empId from employee table, where the empId is equal to NULL
+
+
+
+Ans:
+
+1.
+SELECT *
+FROM employee
+WHERE Salary IS NULL;
+
+
+
+
+2.
+update emp
+set empid=100
+where empid is NULL;
+
+
+
+3.
+delete 
+from emp
+where empid is NULL;
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+ORDER clause:
+
+
+
+Syntax:
+
+SELECT <columnName>
+FROM <TableName>
+[WHERE condition]
+[ORDER BY column1,column2,---columnN] [ASC | DESC];
+
+
+
+Example:
+
+1.[salary in ascending order]
+select * from emp
+order by sal ASC;
+
+
+2.[salary in descending order]
+select * from emp
+order by sal DESC;
+
+
+
+
+ASSIGNMENT:
+
+
+1.select FirstName from employee table whose salary greater than 3000 and display the FirstName in descending order
+
+2.select FirstName from employee table whose salary greater than 5000 and display the FirstName in ascending order
+
+
+Note:
+
+In SQL, sorting with ORDER BY is typically case-sensitive depending on the database configuration. By default:
+
+Uppercase letters (A-Z) come before lowercase letters (a-z) in ASCII-based sorting.
+DESC arranges the data from the highest value to the lowest.
+
+
+
+1.
+select name from emp
+where sal>3000
+order by name DESC;
+
+
+
+2.
+select name from emp
+where sal>5000
+order by name ASC;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

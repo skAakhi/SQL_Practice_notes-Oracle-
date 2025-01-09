@@ -1,0 +1,591 @@
+SET Operators:
+
+
+1.Union
+
+2.Union All
+
+3.Intersect
+
+4.Minus
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+1.UNION Operator:[Used to eliminate duplicate rows among two or more tables]
+
+
+Example:
+
+select dept_id,name from cust
+union
+select dept_id,branch from dept;
+
+
+cust table:
+dept_id   Name          Address
+30	developer	ongole
+40	devops	        ongole
+
+
+dept table:
+
+dept_id  Branch
+30	developer
+40	full stack
+
+
+
+Output:
+
+30	developer
+40	full stack
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+2.UNION ALL Operator: [It combines two tables as single output table and dosent remove duplicate values]
+
+Note:[The data_type of columns of first table and columns of second table should be same,and cannot use order by clause seperately for one query]
+
+
+Example:
+
+select dept_id,name from cust
+union all
+select dept_id,branch from dept;
+
+
+cust table:
+dept_id   Name          Address
+30	developer	ongole
+40	devops	        ongole
+
+
+dept table:
+
+dept_id  Branch
+30	developer
+40	full stack
+
+
+
+Output:
+
+30	developer
+40	devops
+30	developer
+40	full stack
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+3.INTERSECT Operator:[The data which is common among from two or more tables is will provide it that correspondence data] 
+
+Note:[Cannot use order by clause seperately for one query]
+
+
+Example:
+
+select dept_id,name from cust
+intersect
+select dept_id,branch from dept;
+
+
+
+cust table:
+dept_id   Name          Address
+30	developer	ongole
+40	devops	        ongole
+
+
+dept table:
+
+dept_id  Branch
+30	developer
+40	full stack
+
+
+Output:
+
+30	developer
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+MINUS Operator:[The Minus Operator returns  rows from the first Query that are not Present in the Second Query]
+               (or)
+               [It compares two tables ,if rows of first table is matching with rows of second table , then it will eliminates that correspodence rows from first table]
+
+
+
+Example:
+
+select dept_id,name from cust
+MINUS
+select dept_id,branch from dept;
+ 
+
+cust table:
+dept_id   Name          Address
+30	developer	ongole
+40	devops	        ongole
+
+
+dept table:
+
+dept_id  Branch
+30	developer
+40	full stack
+
+
+Output:
+
+40	devops
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+VIEW: [A View is a Virtual table that does not physically exist, it is created by a query joining one or more tables.]
+
+
+
+Syntax:
+
+CREATE OR REPLACE VIEW  View_name AS--------------->Create means creating new view if doesnt exist and Replace means if already exist it will be renamed]
+SELECT columns...
+from TableName;
+
+
+Note:[can apply set operators]
+
+Example:
+
+create or replace view emp_view as
+select e.dept_id ,d.branch
+from cust e ,dept d;
+
+
+cust table:
+dept_id   Name          Address
+30	developer	ongole
+40	devops	        ongole
+
+
+dept table:
+
+dept_id  Branch
+30	developer
+40	full stack
+
+
+
+Output:
+30	developer
+30	full stack
+40	developer
+40	full stack
+
+
+Expected output:
+
+dept_id  Branch
+30       developer
+40       full stack
+
+
+Note: If you want as expected output then prefer joins.
+
+
+create or replace view emp_view as
+select e.dept_id ,d.branch
+from cust e join dept d
+on e.dept_id=d.dept_id;
+
+
+Output:
+
+dept_id   Branch
+30       developer
+40       full stack
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+SYNONYMS: [A synonym is an alternative name for objects such as tables, views, sequences, stored procedures, and other database objects.]
+
+
+
+Syntax:
+
+create or replace public Synonym_name for Table_name;
+
+
+Example:
+
+create or replace public synonym emp_sys for emp;
+
+
+To print:
+
+select * from emp_sys;
+
+To drop:
+
+DROP PUBLIC SYNONYM emp_sys;
+
+Output:
+
+
+5	Raju	20000		
+6	sita	30000		
+7	gopi	6400		
+8	sravya	5400		
+5	Aakhib	200000	27-11-03	
+6	Rahu	20000	21-12-01	
+7	siva	54330	05-09-02	
+8	SasiDhar	200000	21-06-91	
+5	taslim	43000	27-11-03	
+6	Parveen	88000	21-12-07	
+
+
+emp_sys is printing which is in emp table.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+SEQUENCE :[It is an object in oracle used to generate auto numbers ]
+
+
+Syntax:
+Create SEQUENCE sequence_name
+MIN value
+MAX value'
+START WITH value
+INCREMENT BY value
+CACHE value;
+
+
+
+
+NEXTVAL : ----> It will generate next value based on increment value
+
+CURRVAL :-----> It will generate current values only at all time when we execute it again and again
+
+
+
+Practice code:
+
+create SEQUENCE emp_seq
+MINVALUE 1
+MAXVALUE 999999
+START WITH 1
+INCREMENT BY 3
+CACHE 30;
+
+desc emp;
+
+select emp_seq.NEXTVAL from DUAL;
+
+select emp_seq.CURRVAL from DUAL;
+
+
+INSERT INTO EMP (empid,name,sal,gender,hiredate) 
+values(emp_seq.NEXTVAL,'Abhilasha',234569,'male',TO_DATE('09-01-25','dd-mm-yy'));------------------>Dual value = 34
+
+
+
+INSERT INTO EMP (empid,name,sal,gender,hiredate) 
+values(emp_seq.CURRVAL,'Akhila',12945,'female',TO_DATE('09-01-25','dd-mm-yy'));--------------------->Dual value = 34 
+
+INSERT INTO EMP (empid,name,sal,gender,hiredate) 
+values(emp_seq.NEXTVAL,'SOUJANYA',43000,'male',TO_DATE('09-01-25','dd-mm-yy'));------------------>Dual value = 37
+
+
+Output:
+5	Raju	20000		
+6	sita	30000		
+7	gopi	6400		
+8	sravya	5400		
+34	Abhilasha	234569	09-01-25	male
+34	Akhila	12945	09-01-25	female
+5	Aakhib	200000	27-11-03	
+6	Rahu	20000	21-12-01	
+7	siva	54330	05-09-02	
+8	SasiDhar	200000	21-06-91	
+5	taslim	43000	27-11-03	
+6	Parveen	88000	21-12-07	
+
+
+
+
+ASSIGNMENT:
+
+1) Create Sequence on employee table and sequence should start with 1000 and max value 10000 , increment sequence by 1 
+2) Create Sequence on department table and sequence should start with 100 , max value 200 , cyclic , increment by 30 
+
+
+
+
+ANS:
+
+1.
+CREATE SEQUENCE emp_sequence
+START WITH 1000
+INCREMENT BY 1
+MAXVALUE 10000
+NOCYCLE;
+
+
+NOCYCLE: The sequence will not restart once it reaches the maximum value.
+
+
+2.
+CREATE SEQUENCE dept_sequence
+START WITH 100
+INCREMENT BY 30
+MAXVALUE 200
+CYCLE;
+
+CYCLE: When the sequence reaches the maximum value (200), it restarts from the minimum value.
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+PSEUDO COLUMNS: [This is in_built column , oracle will provide one default column]
+
+
+TYPES:
+
+1.ROWID---->This will give record address
+
+2.ROWNUM--->This will give row number in sequential order starting from 1
+
+3.NEXTVAL-->[Take reference from previous examples]
+
+4.CURRVAL-->[Take reference from previous examples]
+
+5.LEVEL
+
+
+
+EXAMPLE:
+
+
+select ROWID,ROWNUM,emp_seq.CURRVAL,emp_seq.NEXTVAL, e.* from emp e;
+
+
+AAASfGAABAAAIbBAAA	1	118	118	5	Raju	20000		
+AAASfGAABAAAIbBAAB	2	121	121	6	sita	30000		
+AAASfGAABAAAIbBAAC	3	124	124	7	gopi	6400		
+AAASfGAABAAAIbBAAD	4	127	127	8	sravya	5400		
+AAASfGAABAAAIbBAAE	5	130	130	34      Abhilash234569	09-01-25	        male
+AAASfGAABAAAIbBAAF	6	133	133	34	Akhila	12945	09-01-25	       female
+AAASfGAABAAAIbBAAG	7	136	136	5	Aakhib	200000	27-11-03	
+AAASfGAABAAAIbBAAH	8	139	139	6	Rahu	20000	21-12-01	
+AAASfGAABAAAIbBAAI	9	142	142	7	siva	54330	05-09-02	
+AAASfGAABAAAIbBAAJ	10	145	145	8	SasiDha 200000	21-06-91	
+AAASfGAABAAAIbBAAK	11	148	148	5	taslim	43000	27-11-03	
+AAASfGAABAAAIbBAAL	12	151	151	6	Parveen	88000	21-12-07	
+AAASfGAABAAAIbBAAM	13	154	154	37	SOUJANYA43000	09-01-25	         male
+
+
+
+
+5.LEVEL:
+The LEVEL pseudo column in SQL is used with hierarchical queries, primarily when dealing with data that has a parent-child relationship, s
+uch as organizational charts or directories. It is commonly used with the CONNECT BY clause in Oracle SQL to traverse hierarchical data.
+
+
+
+Example: Employee Hierarchy
+Assume you have an EMPLOYEES table like this:
+
+EMPLOYEE_ID	EMPLOYEE_NAME	MANAGER_ID
+1	            John	NULL
+2	            Mary	1
+3	            Steve	1
+4	            Anna	2
+5	            Mark	3
+
+
+
+
+SELECT LEVEL AS hierarchy_level, 
+       EMPLOYEE_NAME, 
+       MANAGER_ID
+FROM EMPLOYEES
+START WITH MANAGER_ID IS NULL
+CONNECT BY PRIOR EMPLOYEE_ID = MANAGER_ID;
+
+
+
+Output:
+HIERARCHY_LEVEL	EMPLOYEE_NAME	MANAGER_ID
+1	            John	NULL
+2	            Mary	1
+2	            Steve	1
+3	            Anna	2
+3	            Mark	3
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+SUBSTITUTION Operator:
+
+When a substitution variable is used in a statement, SQL*Plus requests an input value and rewrites the statement to include it. 
+The rewritten statement is passed to the database. As a result, the database server knows nothing of the substitution variable
+
+
+
+Example:
+
+SELECT * FROM EMP
+WHERE NAME='&dd';
+
+Note: After executing above statement will ask value from user suppose value=Aakhib]
+
+output:
+
+5	Aakhib	200000	27-11-03	
+
+
+
+
+define yy=sravya;
+
+SELECT * FROM EMP
+WHERE NAME='&yy';
+
+
+
+output:
+
+8	sravya	5400		
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+PART 2:
+
+SYNONYM:[Used to make alias of table]
+
+Note: Actual values wont store in synonyms.
+
+
+
+Syntax:
+
+CREATE OR REPLACE PUBLIC SYNONYM schema.SYNONYM_name
+for schema.object_name/Table_name;
+
+
+
+(or)
+
+
+create table emp  as select * from  employee;
+CREATE [OR REPLACE] [PUBLIC] SYNONYM [schema .] synonym_name
+  FOR [schema .] object_name;
+
+
+Example:
+
+1.
+CREATE OR REPLACE PUBLIC SYNONYM emp1
+FOR hr.emp;
+
+2.
+CREATE OR REPLACE  SYNONYM scott.emp2
+FOR hr.emp;
+
+
+Object can be:
+
+table
+view
+sequence
+stored procedure
+function
+package
+materialized view
+java class schema object
+user-defined object
+synonym
+
+
+
+
+
+To drop:
+
+DROP [PUBLIC] SYNONYM [schema .] synonym_name [force];
+
+
+Example:
+
+
+DROP PUBLIC SYNONYM emp1;
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+
+
+
+
+PRIVILAGES:
+
+
+
+
+Syntax:
+
+Grant previlages ON hr.column to User/schema
+
+
+
+Example:
+
+Grant insert,update,delete ON hr.emp to scott.
+
+
+Home work:
+Study about it with more examples:
+
+
+
+
+
+
+--------------------------------------------------------------------------SQL COMPLETED--------------------------------------------------------------------------------- 
+
+
+
+
+
+
+

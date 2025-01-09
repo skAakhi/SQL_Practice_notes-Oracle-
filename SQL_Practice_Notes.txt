@@ -1,0 +1,365 @@
+SQL(Structured qurey language) : It is standard database language which is used to create ,maintain and retrive the relational data base
+
+
+
+COMMANDS:(sub_languages)
+
+DDL------->create,drop,truncate,rename,Alter
+DML------->insert,update,delete
+DCL------->grant,revoke
+TCL------->commit,rollback,savePoint
+DQL/DRL------->select
+
+---------------------------------------------------------------------------------------------------------------------------
+Alter:
+1.Adding coloumn
+2.Rename cooumn
+3.Remove coloumn
+4.Modify data_type
+
+
+
+
+Syllabus:
+
+Chapter 1:
+
+1.Introduction Database
+2. Understanding DBMS vs RDBMS
+3. Gone through SQL Standards
+4. Sub languages of SQL
+5. Difference between 10g vs 11g vs 12c
+6. Installation of 12c
+7. About SQL*Plus and use of developer tool
+8. Datatypes in Oracle
+9. Operators in Oracle
+10. Understanding Schema design and objects
+
+
+
+Chapter 2:
+
+1. How to use select statement in different ways to retrieve records?
+2. Working with Column alias
+3. Working with Table alias
+4. Data filtering and sorting with in single table
+5. Clauses and its types in oracle
+Where clause
+Having clause
+From clause
+Group by clause
+Order by clause
+Using clause
+Constraint clause
+For update clause
+
+
+
+chapter 3:
+
+Table creation using CREATE statement
+2. Creating table from another table
+3. Dropping a table using DROP command
+4. Altering the column of a table
+5. Modifying the column datatype in a table
+6. Renaming the column of a table
+7. Renaming an entire table
+8. Using truncate command
+9. Difference between Delete and Truncate command
+
+
+
+chapter 4:
+
+1. How to copy data from one table to another table?
+2. How to copy the structure alone from a table?
+3. Different types of inserting row to an existing table
+4. Updating any value of with in a record using UPDATE command
+5. Deleting a particular record from a table
+6. Using merge & insert all command [Implementation of Project 1 ]
+
+
+
+chapter  5:
+
+1. How to declare column level constraints?
+2. How to declare row level constraints ?
+3. How to add constraints to an existing table?
+4. Types of integrity constraints
+Not null
+Unique key
+Primary key
+Referential integrity
+Check integrity
+5. How to enable and disable constraints?
+6. How to get information about constraints?
+
+
+
+chapter 6:
+
+1. Understanding Single row functions
+2. How to use single row functions using dummy table?
+3. Types of single row functions
+String functions
+Date functions
+Mathematical functions
+Conversion functions
+Special functions
+Analytical functions
+4. Working with multi row functions [Implementation of Project 2]
+
+
+
+chapter 7:
+
+1. Working with aggregate function
+Count()
+Sum()
+Max()
+Min()
+Avg()
+2. Working with group by clause
+3. Working with having clause
+4. Difference between WHERE and HAVING clause
+
+
+
+chapter 8:
+
+1. Understanding joins and its uses
+2. Types of joins
+Equi join
+Non – equi join
+Self join
+Outer join
+Left & Right outer join
+Full outer join
+Cross join [Implementation of Project 3]
+
+
+
+
+chapter 9:
+
+How to use set operators in a single table content?
+
+Working with set operator types
+UNION
+ALL
+INTERSECT
+MINUS
+
+Working with pseudo columns using the following
+ROWID
+ROWNUM
+
+
+
+chapter 10:
+
+1. Importance of sub queries
+2. Using different types of sub queries
+Single row sub queries
+Multi row sub queries
+Nested queries
+Multi column sub queries
+Correlated sub queries
+3. Using inline views and scalar queries [ Implementation of Project 4]
+
+
+
+chapter 11:
+
+1. Working with data query language using TCL
+2. Working with data control language commands
+3. Use of commit and rollback
+4. Use of savepoint and set transaction
+5. How to give system privileges to an user?
+6. How to invoke and revoke object privileges?
+7. How to create users and roles?
+
+
+
+chapter 12:
+
+1. Creating and working with Views
+2. Working with Synonyms
+3. Creating Index and clusters
+4. Working with in materialized view
+5. Understanding sequences and its types [Implementation of Project 5]
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+chapter 13:[Introduction to PLSQL]
+
+
+ Informal introduction to PL/SQL
+2. Advantages of PL/SQL
+3. Datatypes in PL/SQL
+4. Program structure of PL/SQL
+5. Embedding SQL statements
+6. Using conditional statements and loops
+
+
+
+
+
+chapter 14:
+
+1. What is cursor?
+2. How to create cursor?
+3. Using cursors in PL/SQL
+4. How to create explicit cursor?
+5. Creation of for loop cursor
+6. What are cursor parameters?
+7. How to use for update clause?
+8. What is ref cursors?
+9. How to use implicit cursors?
+
+
+
+
+chapter 15 :
+
+1. What is an Exception?
+2. Describing Exception types
+3. Handling system defined exceptions
+4. Handling user defined exceptions?
+5. Sql code vs Sql errm
+6. Pragma exception_init
+
+
+
+chapter 16:
+
+Creating procedures in Pl/SQL
+
+Working with procedure parameters
+IN parameter
+OUT parameter
+INOUT parameter
+
+How to create procedures with cursors
+
+How procedures return records?
+
+What is Pragma autonomous transaction?
+
+
+
+
+
+
+chapter 17:
+
+
+1. Importance of function
+2. How to create functions?
+3. Difference between procedures and functions
+4. How to use inline functions?
+
+
+
+
+
+chapter 18:
+
+1. What is a Package?
+2. Reasons to use packages
+3. What is package specification?
+4. What is package body?
+5. How to instantiate package?
+6. How to initialize instantiated package?
+7. What are all the package state?
+
+
+
+
+
+chapter 19:
+
+1. How to create triggers?
+2. Benefits of trigger
+3. How to trigger a trigger?
+4. Using DML trigger & DDL trigger
+5. How to audit database using triggers?
+6. What are database level trigger?
+
+
+
+chapter 20:
+
+1. What is collection?
+2. How to use arrays?
+3. Using nested tables
+4. How to use index by value?
+5. Listing types of collection methods.
+6. General overview and discussion about DBA Concepts
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+Git & github:
+
+Github Introduction
+Account creation
+Github Repository
+Pushing Projects
+Pulling Projects
+ReadME File
+Git Introduction
+Git Installation
+Git Clone
+Git Status
+Git Add
+Git Commit
+Git Push
+Git Pull
+Git vs Github
+
+
+
+
+
+
+
+PowerBI Introduction
+PowerBI Installation
+PowerBI Query Editor
+Introduction to PowerBI Query
+Load
+Transform
+Extract
+Data types and Filters in PowerBI Query
+Inbuilt Column Transformations
+In built Row Transformations
+PowerBI Pivot table
+Report
+Table
+Models
+Visualization Charts
+Fields
+Analysis of Data
+Creating Dashboards
+Running Python Scripts
+Projects:
+Data Visualization using PowerBI with Realtime Data sets
+
+
+
+
+
+
+
+
