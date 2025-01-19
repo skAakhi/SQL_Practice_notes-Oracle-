@@ -1,0 +1,1902 @@
+
+Note: Some time you will have to face one kind of issue that is given below:so i suggest you to use below commands to make your pdb from MOUNTED---->READ/WRITE mode:
+
+Error:
+while retriving data , im encountering RA-01219: database or pluggable database not open: 
+queries allowed on fixed tables or views only
+
+
+SELECT name, open_mode FROM v$pdbs;
+
+
+ALTER SESSION SET CONTAINER = CDB$ROOT;
+
+
+ALTER PLUGGABLE DATABASE <pdb> OPEN;
+
+
+ALTER PLUGGABLE DATABASE ALL OPEN;
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+PLSQL:
+
+First program to print message on output console.
+
+
+Example:
+
+
+
+1.Simple program to print message.
+
+
+SET SERVEROUTPUT ON--------------------------------------------->If you want see input message as in output then include this line.
+BEGIN
+dbms_output.put_line('Hello Aakhib welcome to PLSQL');
+END;
+/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Sections:
+
+1.Declaration section
+
+2.Body section
+
+3.End section
+
+
+
+Syntax:
+
+SET SERVEROUTPUT ON
+
+Declare
+
+--can declare variables and can do initialization
+
+BEGIN
+
+---Can implement our logic 
+
+---Exception
+
+END;
+/
+
+
+
+
+
+
+Example:
+
+SET SERVEROUTPUT ON
+
+declare
+num1 Number;--Declaration
+num2 Number:=987;--Initialization
+
+BEGIN
+dbms_output.put_line('Hello Aakhib '||num2);
+
+END;
+/
+
+
+Output:
+
+Hello Aakhib 987
+
+
+PL/SQL procedure successfully completed.
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+OPERATORS:
+
+
+1.+,-,*,/    [Arthematic operators]
+
+
+2. '         [Character string delimiter]
+
+3. --        [Single line comment]
+
+4. =>        [Associatoin operator]
+
+5. ;         [Statement teriminator]
+
+6. :=        [Assignment operator]
+
+7. ||        [Concatenation operator]
+
+8. <,> <=,>= [Relational operators]
+
+9./* */      [Multi_line comment]
+
+10. :        [Host variable indicater]
+
+11. ..       [Range indicator]
+
+12. <>,'=,~=,^=  [Different versions of NOT equal operators]
+
+13. %        [Attribute indicator]
+
+14. .        [Component selector]
+
+15. (,)      [List delimiter]
+
+16. ,        [Item seperator]
+
+17. @        [Remote access indicator]
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+DATA TYPES:
+
+1.SCALAR:--------> NUMBER(prec,scale),CHAR , VARCHAR2 , RAW, NCHAR , NVARCHAR2, LONG, LONGRAW , ROWID, UROWID, DATE , MONTH, YEAR , DAY , HOUR ,MINUTE, SECOND, TRUE,FALSE
+
+
+2.LARGE OBJECTS:------->BFILE, BLOB, CLOB, NCLOB
+
+3.COMPOSITE  :---------> collection and Record
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+Example program:
+
+SET SERVEROUTPUT ON
+declare
+num1 Number;--Declaration
+num2 Number:=987;--Initialization
+num3 Number:=1000;
+
+varchar1 boolean:=true;
+
+BEGIN
+dbms_output.put_line(num2+num3);
+DBMS_OUTPUT.PUT_LINE(CASE
+                           WHEN varchar1 THEN 'TRUE'
+                           ELSE 'FALSE'
+                        END);
+dbms_output.put_line('Hello Aakhib '||num2);
+END;
+/
+
+
+
+
+output:
+1987
+TRUE
+Hello Aakhib 987
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Arthematic operators:
+
+1.+
+2.-
+3.*
+4.%
+5.** ---->[Exponential operator ex: 2**3=8]
+
+
+SET SERVEROUTPUT ON
+declare
+num1 Number;--Declaration
+num2 Number:=2;--Initialization
+num3 Number:=1000;
+
+varchar1 boolean:=true;
+
+BEGIN
+dbms_output.put_line(num2+num3);
+DBMS_OUTPUT.PUT_LINE(CASE
+                           WHEN varchar1 THEN 'TRUE'
+                           ELSE 'FALSE'
+                        END);
+dbms_output.put_line('Hello Aakhib '||num2);
+
+dbms_output.put_line(num2**3);
+dbms_output.put_line(num2-num3);
+
+END;
+/
+
+
+
+Output:
+
+1002
+TRUE
+Hello Aakhib 2
+8
+-998
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Relational operator:
+
+
+1.AND
+
+set SERVEROUTPUT on
+
+declare 
+num1 Boolean:=true;
+num2 Boolean:=TRUE;
+
+begin
+if(num1 and num2)
+then
+dbms_output.put_line('Inside if block');
+end if;
+
+END;
+/
+
+
+
+output:
+
+Inside if block
+
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+
+2.OR
+
+
+set SERVEROUTPUT on
+
+declare 
+num1 Boolean:=true;
+num2 Boolean:=false;
+
+begin
+if(num1 OR num2)
+then
+dbms_output.put_line('Inside if block');
+end if;
+
+END;
+/
+
+
+
+output:
+
+Inside if block
+
+
+PL/SQL procedure successfully completed.
+
+
+
+
+3.NOT
+
+set SERVEROUTPUT on
+
+declare 
+num1 Boolean:=true;
+num2 Boolean:=false;
+
+begin
+if(NOT num2)
+then
+dbms_output.put_line('Inside if block');
+end if;
+
+END;
+/
+
+
+
+output:
+
+Inside if block
+
+
+PL/SQL procedure successfully completed.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+COMPARISION Operator:
+
+1.LIKE
+
+2.BETWEEN
+
+3.IN
+
+4.IS NULL 
+
+
+
+
+Example:
+
+set serveroutput on
+declare
+emp_id Number;
+emp_name varchar2(200);
+emp_sal Number(10,2);
+emp_hireDate Date;
+emp_gender varchar2(10);
+
+begin
+select empid into emp_id from emp
+where name like 'Ra%' and empid=5;
+dbms_output.put_line('Employee Id is :'||emp_id);
+
+select name into emp_name from emp
+where empid=5 and sal=20000;
+dbms_output.put_line('Employee Name is :'||emp_name);
+
+select name,sal into emp_name,emp_sal from emp
+where sal=200000  and hiredate=To_date('27-11-03','DD-MM-YY');
+dbms_output.put_line('Employee Name:'||emp_name ||' Salary is :'||emp_sal);
+
+
+
+EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No employee found with name starting with "Ra".');
+    WHEN TOO_MANY_ROWS THEN
+        DBMS_OUTPUT.PUT_LINE('Multiple employees found with name starting with "Ra". Please refine your query.');
+
+end;
+/
+
+
+
+
+Output:
+Employee Id is :5
+Employee Name is :Raju
+Employee Name:Aakhib Salary is :200000
+
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+To drop:
+
+Drop Procedure Precedure_name;
+
+Example:
+
+DROP PROCEDURE emp_pro;
+
+
+
+
+
+
+(or)
+
+Note: To deal with individual exception then
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+    emp_id      NUMBER;
+    emp_name    VARCHAR2(200);
+    emp_sal     NUMBER(10,2);
+    emp_hireDate DATE;
+    emp_gender  VARCHAR2(10);
+
+BEGIN
+    -- Fetch employee ID where name starts with 'Ra' and empid is 5
+    BEGIN
+        SELECT empid INTO emp_id
+        FROM emp
+        WHERE name LIKE 'Ra%' AND empid = 5;
+        DBMS_OUTPUT.PUT_LINE('Employee Id is: ' || emp_id);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('No employee found with empid = 5 and name starting with "Ra".');
+        WHEN TOO_MANY_ROWS THEN
+            DBMS_OUTPUT.PUT_LINE('Multiple employees found with empid = 5 and name starting with "Ra".');
+    END;
+
+
+
+
+
+    -- Fetch employee name where empid is 5 and salary is 20000
+    BEGIN
+        SELECT name INTO emp_name
+        FROM emp
+        WHERE empid = 5 AND sal = 20000;
+        DBMS_OUTPUT.PUT_LINE('Employee Name is: ' || emp_name);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('No employee found with empid = 5 and salary = 20000.');
+        WHEN TOO_MANY_ROWS THEN
+            DBMS_OUTPUT.PUT_LINE('Multiple employees found with empid = 5 and salary = 20000.');
+    END;
+
+
+
+
+
+    -- Fetch employee name and salary where empid is 5 and hire date matches
+    BEGIN
+        SELECT name, sal INTO emp_name, emp_sal
+        FROM emp
+        WHERE empid = 5 AND hiredate = TO_DATE('27-11-03','DD-MM-YY');
+        DBMS_OUTPUT.PUT_LINE('Employee Name: ' || emp_name || ', Salary is: ' || emp_sal);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            DBMS_OUTPUT.PUT_LINE('No employee found with empid = 5 and hire date 27-Nov-2003.');
+        WHEN TOO_MANY_ROWS THEN
+            DBMS_OUTPUT.PUT_LINE('Multiple employees found with empid = 5 and hire date 27-Nov-2003.');
+    END;
+
+
+
+
+EXCEPTION
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+
+
+END;
+/
+
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+PROCEDURES:[This is like creating one block of logic to define our own logic]
+
+
+Note:
+1.Procedure never return any value
+2.It will be get store in dataBase
+3.At every call procedure does not compile
+
+Types:
+1.Parameter less procedure
+
+2.Parameterized procedure 
+
+
+
+1.Parameter less procedure
+Example:
+
+create or replace procedure emp_pro
+is
+num1 Number;
+
+begin
+num1:=77;
+dbms_output.put_line('Your id is :'|| num1);
+end;
+/
+
+
+---------------
+begin
+emp_pro;-------------->Calling procedure from this block
+end;
+/
+-----------------
+
+
+
+Output:
+
+Your id is : 77
+
+
+
+
+
+
+
+
+
+
+2.Parameterized procedure 
+Example:
+
+create or replace procedure FindMin(num1 IN Number , num2 IN Number, num3 OUT Number)
+is 
+begin
+if num1<num2 then
+num3:=num1;
+else
+num3:=num2;
+end if;
+
+end;
+/
+
+
+
+-------------
+declare
+num3 Number;
+begin
+FindMin(21,8,num3);
+dbms_output.put_line('Minimum number among two numbers is : '||num3);
+end;
+/
+---------------
+
+
+
+Output:
+
+Minimum number among two numbers is : 8
+
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+NOTE: Creating new table using PLSQL procedures.[due to previous data lost]
+
+
+-- Step 1: Create the Table
+CREATE TABLE emp (
+    emp_id NUMBER GENERATED BY DEFAULT AS IDENTITY, -- Auto-increment ID
+    emp_name VARCHAR2(50),                         -- Employee Name
+    sal NUMBER(10, 2),                             -- Salary
+    dob DATE,                                      -- Date of Birth
+    address VARCHAR2(100)                          -- Address
+);
+
+-- Step 2: Insert 20 Random Records
+BEGIN
+    FOR i IN 1..20 LOOP
+        INSERT INTO emp (emp_name, sal, dob, address)
+        VALUES (
+            'Employee_' || DBMS_RANDOM.STRING('U', 5),       -- Random Employee Name
+            ROUND(DBMS_RANDOM.VALUE(30000, 120000), 2),      -- Random Salary between 30,000 and 120,000
+            TRUNC(DATE '1980-01-01' + DBMS_RANDOM.VALUE(0, 7300)), -- Random DOB between 1980 and 2000
+            'Address_' || DBMS_RANDOM.STRING('A', 8)         -- Random Address
+        );
+    END LOOP;
+    COMMIT;
+END;
+/
+
+-- Step 3: Verify the Data
+SELECT * FROM emp;
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+FUNCTIONS:
+
+1.Parameter less function
+
+2.Parameterized function
+
+
+
+
+
+1.Parameter less function
+
+Example:
+
+create or replace Function emp_fun
+return number 
+is
+total Number(10,2):=0;
+Begin
+select sum(sal) into total from emp;
+return total;
+End;
+/
+
+
+----------------
+declare
+c Number(10,2):=0;
+Begin
+c:=emp_fun;
+dbms_output.put_line('The sum of salary in employees table '||c);
+end;
+/
+
+
+
+Output:
+
+The sum of salary in employees table 957644
+
+
+PL/SQL procedure successfully completed.
+
+
+
+
+
+2.Parameterized function
+
+Example:
+
+create or replace Function emp_fun(num1 IN Number)
+return number 
+is
+total Number(10,2):=0;
+Begin
+select sal into total from emp
+where emp_id=num1;
+return total;
+End;
+/
+
+
+----------------
+set serveroutput on
+declare
+c Number(10,2):=0;
+Begin
+c:=emp_fun(5);
+dbms_output.put_line('The salary of employee from table emp : '||c);
+end;
+/
+
+
+
+
+
+(or)
+----------->Input from the user(At runtime assigning value)
+
+set serveroutput on
+declare
+c Number(10,2):=0;
+num2 Number:=0;
+Begin
+num2:='&sal';
+c:=emp_fun(num2);
+dbms_output.put_line('The salary of employee from table emp : '||c);
+end;
+/
+--------------->
+
+
+Initial data:
+
+1	Employee_HPXMW	48160.51	10-05-94	Address_kTTfkWMI
+2	Employee_NVHLY	42493.99	17-07-81	Address_eAnmRRjX
+3	Employee_CKMXC	71392.51	23-04-81	Address_VfiIzEQt
+4	Employee_XJIXC	47375.75	30-08-82	Address_litCRNqd
+5	Employee_QUCVH	93821.26	01-03-83	Address_ZinJzNbN
+6	Employee_AZYIQ	107237.03	08-10-90	Address_YVFxWpHv
+7	Employee_ASFSN	69911.69	20-11-93	Address_MqcidQIg
+8	Employee_LERQF	92112.23	29-10-83	Address_pOznmchV
+9	Employee_QFFWM	93195.6	        28-06-88	Address_xnDdgbip
+10	Employee_MZQCS	43899.27	05-08-82	Address_zwKAYxMH
+11	Employee_WILAK	41119.57	22-05-85	Address_mFUalQHt
+12	Employee_MRUXC	73309.5	        16-11-97	Address_igSrKjrk
+13	Employee_WHHEC	117996.48	08-01-95	Address_pVvtaRVs
+14	Employee_AQRSC	38738.21	17-01-99	Address_svoLHhkM
+15	Employee_VDAKO	84736.23	20-11-93	Address_DwPVdONZ
+16	Employee_IYHHC	115129.19	20-02-86	Address_hjghaWqp
+17	Employee_FPXLI	70870.26	20-03-82	Address_CYpRCMAT
+18	Employee_PHUFC	56664.06	25-12-81	Address_xSwXnbqU
+19	Employee_KXQWT	95366.71	07-05-80	Address_UPyHNRcE
+20	Employee_IXYLV	95925.31	08-12-95	Address_boHHBjzH
+
+
+
+
+After data:
+
+PL/SQL procedure successfully completed.
+
+The salary of employee from table emp : 93821.26
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+                             Difference between functions and procedure:
+
+
+            FUNCTION                                                PROCEDURES
+
+1.DML statements cannot be executed within a function        1.DML statements can be executed within a procedure
+
+2.A function can be called within a query                    2.A procedure cannot be called within a query
+
+3.A function has no support of try and catch                 3.A procedure has support of try and catch 
+
+4.A function can be called by a procedure                    4.A procedure cannot be called by a function
+
+5.Whenever a function is called every time it                5.Whenever a procedure is compiled once and 
+  get compiled before being called                             can be called multiple times without being compiled
+
+
+6.A function returns a value and                            6.A procedure returns the control but not any value to
+  control to calling function or code                         calling function or code
+
+7.A function can not have explict                           7.A procedure can use explict transcation handling
+  transcation
+--------------------------------------------------------------------------------------------------------------------------
+                                                                
+TYPES OF CONDITIONS:
+
+Note: This can be implemented for PROCEDURES and FUNCTIONS.
+
+1.IF THEN
+
+2. IF-ELSE
+
+3.IF-ELSE-IF
+
+4.IF-ELSE-IF-ELSE;
+
+
+
+
+Example:
+
+
+
+
+
+create or replace function emp_function(num1 IN Number)
+return Number
+is
+total Number(10,2):=0;
+Begin
+select sal into total from emp
+where emp_id=num1;
+
+if total>50000 then
+dbms_output.put_line('Your sal is  more than 50000');
+elsif total>40000 then
+dbms_output.put_line('Your sal is  more than 40000');
+elsif total>30000 then
+dbms_output.put_line('Your sal is  more than 30000');
+elsif(total>20000)then
+dbms_output.put_line('Your sal is  more than 20000');
+elsif total>5000 then
+dbms_output.put_line('Your sal is  more than 50000');
+end if;
+return total;
+End emp_function;
+/
+
+
+----------------
+set serveroutput on
+declare
+c Number(10,2):=0;
+num2 Number:=0;
+Begin
+num2:='&sal';
+c:=emp_function(num2);
+dbms_output.put_line('The salary of employee from table emp : '||c);
+end;
+/
+
+
+
+Output:
+
+Your sal is  more than 40000
+The salary of employee from table emp : 43899.27
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+TYPES OF LOOPS:
+
+1.Basic loop
+
+2.For loop 
+
+3.While loop
+
+
+
+
+
+
+1.Basic loop
+
+
+Example:
+
+set serveroutput on
+declare
+c Number(10,2):=1;
+emp_sal Number(10,2):=0;
+Begin
+loop
+--emp_sal:=emp_fun(c);
+if(c>20) then
+exit;
+end if;
+dbms_output.put_line('The salary of employee : '||c ||' is ');
+c:=c+1;
+end loop;
+dbms_output.put_line('Out of loop');
+end;
+/
+
+
+Output:
+
+The salary of employee : 1 is 
+The salary of employee : 2 is 
+The salary of employee : 3 is 
+The salary of employee : 4 is 
+The salary of employee : 5 is 
+The salary of employee : 6 is 
+The salary of employee : 7 is 
+The salary of employee : 8 is 
+The salary of employee : 9 is 
+The salary of employee : 10 is 
+The salary of employee : 11 is 
+The salary of employee : 12 is 
+The salary of employee : 13 is 
+The salary of employee : 14 is 
+The salary of employee : 15 is 
+The salary of employee : 16 is 
+The salary of employee : 17 is 
+The salary of employee : 18 is 
+The salary of employee : 19 is 
+The salary of employee : 20 is 
+Out of loop
+
+
+
+Note: Like if you want to retrive salary,date,name can do it to display by passing as a parameter.
+
+
+
+
+
+
+
+2.For loop:
+
+
+
+Example:
+
+set serveroutput on
+declare
+c Number(10,2):=0;
+emp_sal Number(10,2):=0;
+Begin
+for c in 0..5
+loop
+dbms_output.put_line('The salary of employee : '||c ||' is ');
+end loop;
+dbms_output.put_line('Out of loop');
+end;
+/
+
+
+
+Example:
+
+The salary of employee : 0 is 
+The salary of employee : 1 is 
+The salary of employee : 2 is 
+The salary of employee : 3 is 
+The salary of employee : 4 is 
+The salary of employee : 5 is 
+Out of loop
+
+
+
+
+
+
+3.While loop:
+
+
+
+
+Example:
+
+set serveroutput on
+declare
+c Number(10,2):=0;
+emp_sal Number(10,2):=0;
+Begin
+while(c<15)
+loop
+dbms_output.put_line('The salary of employee : '||c ||' is ');
+c:=c+1;
+end loop;
+dbms_output.put_line('Out of loop');
+end;
+/
+
+
+
+
+Output:
+The salary of employee : 0 is 
+The salary of employee : 1 is 
+The salary of employee : 2 is 
+The salary of employee : 3 is 
+The salary of employee : 4 is 
+The salary of employee : 5 is 
+The salary of employee : 6 is 
+The salary of employee : 7 is 
+The salary of employee : 8 is 
+The salary of employee : 9 is 
+The salary of employee : 10 is 
+The salary of employee : 11 is 
+The salary of employee : 12 is 
+The salary of employee : 13 is 
+The salary of employee : 14 is 
+Out of loop
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+CURSORS:
+
+1.Implicit cursor
+
+2.Explicit cursor
+ a.Parameter less
+ b.Parameterized
+
+
+
+Process to create cursor and fetch records one by one
+
+1.Declare cursor
+
+2.Open cursor
+
+3.Fetch record
+
+4.Close cursor
+
+
+
+
+
+Attributes of cursor:
+
+1.%Found--->If record found will return true otherwise false
+
+2.%NotFound--->If record not found will return true otherwise false
+
+3.%isOpen------>Verifies if cursor is open or not
+
+4.%RowCount----> This will count the all records
+
+
+Example:  cursorName%Found;
+
+
+
+
+
+
+
+
+
+
+
+
+Example:[2.a]
+
+CREATE OR REPLACE procedure emp_pro
+IS
+  emp_id emp.empid%type;---------------->This will define datatype of emp table what exactly that column(empid) datatype has
+  --rec emp%Row-------------
+
+
+
+>This will define as datatype of entire record of emp table
+  --or emp_id Number:=0;
+  emp_sal emp.sal%type;
+  
+  cursor emp_cur is select empid,sal from emp;----------------->Declare cursor
+BEGIN
+ open emp_cur;----------------->Open cursor
+ loop
+ fetch emp_cur into emp_id,emp_sal;---------------->Fetching
+ exit when emp_cur%notfound;
+ dbms_output.put_line('id : '||emp_id||' Salary : '||emp_sal);
+ end loop;
+ close emp_cur;-------------------->Close cursor
+  
+END;
+/
+
+----------------
+set serveroutput on
+begin
+emp_pro;
+end;
+/
+
+
+
+
+
+Output:
+
+emp data:
+
+5	Raju	20000		
+6	sita	30000		
+7	gopi	6400		
+8	sravya	5400		
+34	Abhilasha234569	09-01-25	male
+34	Akhila	12945	09-01-25	female
+5	Aakhib	200000	27-11-03	
+6	Rahu	20000	21-12-01	
+7	siva	54330	05-09-02	
+8	SasiDhar200000	21-06-91	
+5	taslim	43000	27-11-03	
+6	Parveen	88000	21-12-07	
+37	SOUJANYA43000	09-01-25	male
+
+
+
+After fetching:
+
+id : 5 Salary : 20000
+id : 6 Salary : 30000
+id : 7 Salary : 6400
+id : 8 Salary : 5400
+id : 34 Salary : 234569
+id : 34 Salary : 12945
+id : 5 Salary : 200000
+id : 6 Salary : 20000
+id : 7 Salary : 54330
+id : 8 Salary : 200000
+id : 5 Salary : 43000
+id : 6 Salary : 88000
+id : 37 Salary : 43000
+
+ 
+
+
+
+Example:[2.b]
+
+
+CREATE OR REPLACE procedure emp_pro(em_id In Number)
+IS
+  emp_id emp.empid%type;--This will define datatype of emp table what exactly that column(empid) datatype has
+  --rec emp%Row-->This will define as datatype of entire record of emp table
+  --or emp_id Number:=0;
+  emp_sal emp.sal%type;
+  
+  cursor emp_cur is select empid,sal from emp where empid=em_id;
+BEGIN
+ open emp_cur;
+ loop
+ fetch emp_cur into emp_id,emp_sal;
+ exit when emp_cur%notfound;
+ dbms_output.put_line('id : '||emp_id||' Salary : '||emp_sal);
+ end loop;
+ close emp_cur;
+  
+END;
+/
+
+----------------
+set serveroutput on
+begin
+emp_pro(5);
+end;
+/
+
+
+Output:
+
+emp data:
+
+5	Raju	20000		
+6	sita	30000		
+7	gopi	6400		
+8	sravya	5400		
+34	Abhilasha234569	09-01-25	male
+34	Akhila	12945	09-01-25	female
+5	Aakhib	200000	27-11-03	
+6	Rahu	20000	21-12-01	
+7	siva	54330	05-09-02	
+8	SasiDhar200000	21-06-91	
+5	taslim	43000	27-11-03	
+6	Parveen	88000	21-12-07	
+37	SOUJANYA43000	09-01-25	male
+
+
+
+After fetching:
+
+
+id : 5 Salary : 20000
+id : 5 Salary : 200000
+id : 5 Salary : 43000
+
+
+Note:The above ids and salaries are which are exactly matched with empid=5.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+RECORD:[It is a kind of variable which can able to hold multiple child variable/data]
+
+
+(or)
+
+Defination:PL/SQL record is a composite data structure that is a group of related data stored in fields. 
+Each field in the PL/SQL record has its own name and data type
+
+
+
+
+Types:
+
+1.Table based record
+
+2.Cursor based record
+
+3.User defined record
+
+
+
+
+
+Example:[1]
+
+
+Syntax:
+
+RecordName TableName%RowType;
+
+
+Example:
+CREATE OR REPLACE procedure emp_pro
+IS
+
+  emp_id emp.empid%type;
+  emp_sal emp.sal%type;
+  emp_rec emp%rowtype;
+BEGIN
+select * into emp_rec from emp where empid=37;
+ 
+ dbms_output.put_line('id : '||emp_rec.empid||' Salary : '||emp_rec.sal);
+END;
+/
+
+----------------
+set serveroutput on
+begin
+emp_pro;
+end;
+/
+
+
+emp data:
+
+5	Raju	20000		
+6	sita	30000		
+7	gopi	6400		
+8	sravya	5400		
+34	Abhilasha234569	09-01-25	male
+34	Akhila	12945	09-01-25	female
+5	Aakhib	200000	27-11-03	
+6	Rahu	20000	21-12-01	
+7	siva	54330	05-09-02	
+8	SasiDhar200000	21-06-91	
+5	taslim	43000	27-11-03	
+6	Parveen	88000	21-12-07	
+37	SOUJANYA43000	09-01-25	male
+
+
+
+After fetching:
+
+id : 37 Salary : 43000
+
+
+
+
+
+
+Example:[2]----->If you want to fetch multiple rows have to take help of cursor.
+
+CREATE OR REPLACE PROCEDURE emp_pro
+IS
+  CURSOR emp_cur IS
+    SELECT * FROM emp;
+
+  emp_rec emp%ROWTYPE;
+BEGIN
+  OPEN emp_cur;
+  LOOP
+    FETCH emp_cur INTO emp_rec;
+    EXIT WHEN emp_cur%NOTFOUND;
+    DBMS_OUTPUT.PUT_LINE('ID: ' || emp_rec.empid || ' Salary: ' || emp_rec.sal);
+  END LOOP;
+  CLOSE emp_cur;
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+BEGIN
+  emp_pro;
+END;
+/
+
+
+
+
+After fetching:
+
+
+ID: 5 Salary: 20000
+ID: 6 Salary: 30000
+ID: 7 Salary: 6400
+ID: 8 Salary: 5400
+ID: 34 Salary: 234569
+ID: 34 Salary: 12945
+ID: 5 Salary: 200000
+ID: 6 Salary: 20000
+ID: 7 Salary: 54330
+ID: 8 Salary: 200000
+ID: 5 Salary: 43000
+ID: 6 Salary: 88000
+ID: 37 Salary: 43000
+
+
+
+
+
+Example:[3]
+
+
+CREATE OR REPLACE PROCEDURE emp_pro
+IS
+
+ TYPE BookType IS RECORD(
+  Title Varchar(30),
+  Subject varchar(40),
+  Author varchar(30),
+  Bookid NUMBER );
+
+  --emp_rec emp%ROWTYPE;
+  Book1 BookType;
+BEGIN
+
+  Book1.Title:='Monvey lessons';
+  Book1.Subject:='Growing wealth';
+  Book1.Author:='Aakhib sir';
+  Book1.Bookid:=6541;
+  
+  dbms_output.put_line('Book Id : '||Book1.Title);
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+BEGIN
+  emp_pro;
+END;
+/
+
+-----------------------------------------
+
+
+
+CREATE TABLE books (
+  title   VARCHAR2(30),
+  subject VARCHAR2(40),
+  author  VARCHAR2(30),
+  bookid  NUMBER PRIMARY KEY
+);
+
+
+select * from books;
+
+-----------------------------------------
+
+
+Note: Even if you wont create any books table , it will work 
+
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+EXCEPTION:[It is mechanism to handle the errors when error occurs]
+
+
+
+
+
+Types:
+
+1.System defined exception---->[System will create and raise the errors in such of cases of anything wrong in my program]
+
+2.User defined exception------>[It mean creating and raising our own exception]
+
+
+
+
+1.System defined exception
+
+
+Predefined commands: TO_MANY_ROWS ,  NO_DATA_FOUND , ZERO_DIVIDE , INVALID_CURSOR
+
+
+
+Example[1]:[System defined exception]
+
+select * from emp;
+
+SET SERVEROUTPUT ON
+CREATE OR REPLACE PROCEDURE emp_pro(num1 IN NUMBER)
+IS
+  emp_rec emp%ROWTYPE;
+BEGIN
+ select * into emp_rec from emp where emp_id=num1;
+ 
+ dbms_output.put_line(emp_rec.emp_id||'  '||emp_rec.emp_name);
+ 
+ Exception
+ WHEN TOO_MANY_ROWS then
+ dbms_output.put_line('There are too many rows with same input');
+ WHEN  NO_DATA_FOUND then
+ dbms_output.put_line('There is no data in your data base please give valid data');
+ 
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+BEGIN
+  emp_pro(20);
+END;
+/
+
+
+
+
+Initial data:
+
+1	Employee_HPXMW	48160.51	10-05-94	Address_kTTfkWMI
+2	Employee_NVHLY	42493.99	17-07-81	Address_eAnmRRjX
+3	Employee_CKMXC	71392.51	23-04-81	Address_VfiIzEQt
+4	Employee_XJIXC	47375.75	30-08-82	Address_litCRNqd
+5	Employee_QUCVH	93821.26	01-03-83	Address_ZinJzNbN
+6	Employee_AZYIQ	107237.03	08-10-90	Address_YVFxWpHv
+7	Employee_ASFSN	69911.69	20-11-93	Address_MqcidQIg
+8	Employee_LERQF	92112.23	29-10-83	Address_pOznmchV
+9	Employee_QFFWM	93195.6	        28-06-88	Address_xnDdgbip
+10	Employee_MZQCS	43899.27	05-08-82	Address_zwKAYxMH
+11	Employee_WILAK	41119.57	22-05-85	Address_mFUalQHt
+
+
+
+
+output:
+
+20  Employee_IXYLV
+
+
+
+
+Example[1.1]
+
+
+SET SERVEROUTPUT ON;
+BEGIN
+  emp_pro(200);
+END;
+/
+
+
+
+output:
+
+There is no data in your data base please give valid data
+
+
+
+
+
+Example[2]:[User defined exception]
+
+SET SERVEROUTPUT ON
+CREATE OR REPLACE PROCEDURE emp_pro(num1 IN NUMBER)
+IS
+  emp_rec emp%ROWTYPE;
+  invalid_empid EXCEPTION;
+BEGIN
+
+ BEGIN
+ select * into emp_rec from emp where emp_id=num1;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+ RAISE invalid_empid;
+  END;
+
+ dbms_output.put_line(emp_rec.emp_id||'  '||emp_rec.emp_name);
+ 
+ Exception
+ WHEN TOO_MANY_ROWS then
+ dbms_output.put_line('There are too many rows with same input');
+ WHEN  invalid_empid then
+ dbms_output.put_line('There is no data in your data base please give valid data');
+ 
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+BEGIN
+  emp_pro(200);
+END;
+/
+
+
+
+OUTPUT:
+
+There is no data in your data base please give valid data
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+TRIGGERS:
+
+
+What is trigger in the PLSQL database?
+Triggers are stored programs, which are automatically executed 
+when some events (activity) occurs, event/activity can delete record, 
+update record creates the table, login database etc. 
+
+
+Types of trigger
+1) DML Triggers
+Normal DML trigger
+INSTEAD OF  Triggers
+2) DDL trigger
+3) DATABASE operation Triggers
+ 
+
+DML Triggers : 
+If any DELETE, INSERT, or UPDATE operation happens in the database and you wanted 
+to automatically trigger/invoke some store program then it is called DML Triggers 
+
+
+DATABASE operation Triggers : 
+If any LOGON/LOGOFF/STARTUP/SHUTDOWN operation happen in the database and you wanted to 
+automatically trigger/invoke  some store program then it is called DDL Triggers
+      
+What DDL trigger : 
+If any CREATE, ALTER, or DROP operation happen in database and you wanted to automatically 
+trigger/invoke some store program then it is called DDL Triggers
+
+INSTEAD OF CREATE Triggers : 
+When you issue a DML statement such as INSERT, UPDATE, or DELETE to a non-updatable view, 
+Oracle will issue an error
+
+
+
+
+
+
+
+
+
+
+DML TRIGGER:
+
+
+
+Syntax:
+
+
+
+Example:
+
+
+
+
+
+
+
+
+
+
+
+DDL TRIGGER:
+
+
+Syntax:
+
+CREATE [OR REPLACE ] TRIGGER trigger_name  
+{BEFORE | AFTER }  
+{CREATE | ALTER | TRUNCATE}   
+ON { DATABASE   | SCHEMA}
+DECLARE 
+   Declaration-statements 
+BEGIN  
+   Executable-statements 
+EXCEPTION 
+   Exception-handling-statements 
+END;
+
+
+
+Example:[practice code]
+
+
+
+select * from emp;
+
+SET SERVEROUTPUT ON
+CREATE OR  REPLACE TRIGGER myFirstDDLTrigger1
+before DDL on DATABASE 
+declare 
+ a number(10);
+    event_Type      VARCHAR2(15);
+    object_Type    VARCHAR2(15);
+    object_name    VARCHAR2(15);
+begin 
+dbms_output.put_line('Performing operation: ' || ora_sysevent 
+                      || ' On type of obj: ' || ORA_DICT_OBJ_TYPE 
+                      ||' Name of obj: '|| ora_dict_obj_name
+                      ||' On Date: '||sysdate); 
+event_Type := ora_sysevent;
+object_Type := ORA_DICT_OBJ_TYPE;
+object_name := ora_dict_obj_name;
+
+insert into s_audit 
+values(sysdate,sys_context('USERENV','CURRENT_USER'),
+       event_Type,object_Type,object_name);  
+       
+       IF (ora_sysevent='TRUNCATE') THEN
+          dbms_output.put_line('Hey I have truncated table'); 
+       ELSIF(ora_sysevent = 'DROP') THEN
+             dbms_output.put_line('Hey I have dropped table'); 
+       ELSIF(ora_sysevent = 'CREATE') THEN
+              dbms_output.put_line('Hey I have Created table'); 
+       END IF;
+end;
+
+alter trigger myFirstDDLTrigger1 enable;
+
+drop trigger myFirstDDLTrigger1;
+
+select * from s_audit;
+
+alter table emp rename column emp_id to empid;
+
+CREATE TABLE s_audit (
+    event_date   DATE DEFAULT SYSDATE,
+    username     VARCHAR2(30) DEFAULT SYS_CONTEXT('USERENV', 'CURRENT_USER'),
+    event_type   VARCHAR2(50),
+    object_type  VARCHAR2(50),
+    object_name  VARCHAR2(128)
+);
+
+
+
+
+
+
+SELECT trigger_name, status
+FROM user_triggers
+WHERE trigger_name = 'MYFIRSTDDLTRIGGER1';
+
+
+
+
+
+CREATE TABLE test_table1 (
+    id NUMBER PRIMARY KEY,
+    name VARCHAR2(50)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------
+
+
+
+
+
+INSTEAD TRIGGER:
+
+
+Syntax:
+
+
+
+
+
+
+Example:
+
+
+
+
+
+
+
+
+-------------------------------
+
+
+
+
+SYSTEM TRIGGER:
+
+Reason:
+->Monitoring purpose
+->StartUp activity
+->To create log of error
+
+
+Syntax:
+
+CREATE [OR REPLACE ] TRIGGER trigger_name  
+{BEFORE | AFTER }  LOGON or LOGOFF or SHUTDOWN...  
+ON { DATABASE }
+DECLARE 
+   Declaration-statements 
+BEGIN  
+   Executable-statements 
+EXCEPTION 
+   Exception-handling-statements 
+END;
+
+
+
+
+
+
+Example:
+
+select * from s_audit;
+
+
+set serveroutput on 
+CREATE or REPLACE TRIGGER trg_logon
+AFTER LOGON ON DATABASE
+DECLARE
+    event_Type      VARCHAR2(15);
+    object_Type    VARCHAR2(15);
+    object_name    VARCHAR2(15);
+begin
+event_Type := ora_sysevent;
+object_Type := ORA_DICT_OBJ_TYPE;
+object_name := ora_dict_obj_name;
+
+insert into s_audit 
+values(sysdate,sys_context('USERENV','CURRENT_USER'),
+       event_Type,object_Type,object_name); 
+end;
+
+
+
+
+
+output:
+19-01-25	SYS	ALTER	TABLE	EMP
+19-01-25	SYS	CREATE	TRIGGER	TRG_LOGON
+19-01-25	SYS	LOGON    null    null		
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+PACKAGES:
+
+
+PL/SQL package is a logical grouping of a related subprogram (procedure/function) into a single element.
+ A Package is compiled and stored as a database object that can be used later.
+ 
+PL/SQL package has two components.
+1) Package Specification: its has only a declaration
+2) Package Body: it has a complete definition of procedure/function/cursor
+
+Access specification:
+1) private : Private element( procedure/function/variable) are element which are not accessed ouside of the package.
+             and those element (procedure/function/variable) not declared in specification that will be private 
+    element
+2) public: Public element(procedure/function) can be accessed outside of the package and we declare those 
+            element in specification then it becomes public
+
+key Note : 
+1) whenever specification recompiled, the package also has to recompile
+2) If the cursor is defined in the package specification or in global 
+part of the package body, then the cursor once opened will persist till 
+the end of the session
+3) overloading is nothing but if procedure/function with different 
+number of parameters, a different type of parameters, or different retype 
+then it will be known as overloading
+4) all the element in the package will share a common keyspace
+
+
+
+
+syntax of package specification:
+
+
+CREATE [OR REPLACE] PACKAGE package_name 
+IS
+sub_program and public element declaration
+.
+.
+END package name
+
+
+
+
+
+syntax of package body:
+
+CREATE [OR REPLACE] PACKAGE BODY package_name
+IS
+Private element definition
+sub_program and public element definition
+.
+BEGIN
+Package Initialization 
+END package_name
+
+
+
+
+
+
+
+Package related table :
+ALL_OBJECT
+USER_OBJECT
+ALL_SOURCE
+USER_SOURCE
+ALL_PROCEDURES
+USER_PROCEDURES
+
+
+
+
+
+Example : 
+CREATE OR REPLACE PACKAGE employee_pkg AS 
+   errorMess varchar2(100);
+   PROCEDURE find_sal(emp_id employees.employee_id%type); 
+   CURSOR c1 RETURN employees%ROWTYPE;
+END employee_pkg; 
+
+
+
+
+
+CREATE OR REPLACE PACKAGE BODY employee_pkg AS
+  
+   CURSOR c1 RETURN employees%ROWTYPE IS
+      SELECT * FROM employees WHERE salary = 2500;
+   
+   PROCEDURE find_sal(emp_id employees.employee_id%TYPE) IS 
+   emp_sal employees.salary%TYPE; 
+   BEGIN 
+      SELECT salary INTO emp_sal 
+      FROM employees 
+      WHERE employee_id = emp_id; 
+      dbms_output.put_line('Salary: '|| emp_sal); 
+   END find_sal; 
+   
+END employee_pkg; 
+/
+
+
+
+
+
+set SERVEROUTPUT on;
+begin
+  employee_pkg.find_sal(7499); 
+END; 
+/
+
+
+
+
+
+
+
+advantages :
+1) Organized code management.
+2) Easy (top-down) application design.
+3) Easy changes to the implementation.
+4) Security and maintainability.
+5) Session-wide persistence of variables.
+6) Better performance.
